@@ -1,18 +1,18 @@
 import { Global, Module } from "@nestjs/common";
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
+import { DatabaseModule } from './database/database.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { getEnvironment } from "./environment";
-import { DatabaseModule } from './database/database.module';
-import config from './config';
+import databaseConfig from "./config/database.config";
+import { environments } from "./environment";
 
 @Global()
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: getEnvironment(),
-      load: [config],
+      envFilePath: environments[process.env.NODE_ENV] || '.env.development',
+      load: [databaseConfig],
       isGlobal: true
     }),
     DatabaseModule,
