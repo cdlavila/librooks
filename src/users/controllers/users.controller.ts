@@ -18,25 +18,37 @@ export class UsersController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() payload: CreateUserDto) {
-    return this.usersService.create(payload);
+  async create(@Body() payload: CreateUserDto) {
+    return {
+      statusCode: HttpStatus.CREATED,
+      message: 'User created',
+      data: await this.usersService.create(payload)
+    }
   }
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  findById(@Param('id') id: string) {
-    return this.usersService.findOne(id);
+  async findById(@Param('id') id: string) {
+    return {
+      statusCode: HttpStatus.OK,
+      message: `User ${id} found`,
+      data: await this.usersService.findOne(id)
+    }
   }
 
   @Put(':id')
   @HttpCode(HttpStatus.OK)
-  update(@Param('id') id: string, @Body() payload: CreateUserDto) {
-    return this.usersService.update(id, payload);
+  async update(@Param('id') id: string, @Body() payload: CreateUserDto) {
+    return {
+      statusCode: HttpStatus.OK,
+      message: `User ${id} updated`,
+      data: await this.usersService.update(id, payload)
+    }
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     return this.usersService.delete(id);
   }
 }
