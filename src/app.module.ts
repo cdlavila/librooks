@@ -13,6 +13,7 @@ import databaseConfig from './config/database.config';
       envFilePath: AppEnvironment[process.env.NODE_ENV] || '.env',
       load: [databaseConfig],
       isGlobal: true,
+      cache: true,
     }),
     DatabaseModule,
     UsersModule,
