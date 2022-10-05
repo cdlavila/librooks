@@ -1,4 +1,4 @@
-import { Global, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
@@ -7,7 +7,6 @@ import { AppService } from './app.service';
 import { AppEnvironment } from './app.environment';
 import databaseConfig from './config/database.config';
 
-@Global()
 @Module({
   imports: [
     ConfigModule.forRoot({
