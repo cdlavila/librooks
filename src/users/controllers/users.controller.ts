@@ -7,10 +7,10 @@ import {
   Param,
   Body,
   HttpStatus,
-  HttpCode
+  HttpCode,
 } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
-import { CreateUserDto  } from '../dtos/users.dtos';
+import { CreateUserDto } from '../dtos/users.dtos';
 
 @Controller('users')
 export class UsersController {
@@ -22,8 +22,8 @@ export class UsersController {
     return {
       statusCode: HttpStatus.CREATED,
       message: 'User created',
-      data: await this.usersService.create(payload)
-    }
+      data: await this.usersService.create(payload),
+    };
   }
 
   @Get(':id')
@@ -32,8 +32,8 @@ export class UsersController {
     return {
       statusCode: HttpStatus.OK,
       message: `User ${id} found`,
-      data: await this.usersService.findOne(id)
-    }
+      data: await this.usersService.findOne(id),
+    };
   }
 
   @Put(':id')
@@ -42,8 +42,8 @@ export class UsersController {
     return {
       statusCode: HttpStatus.OK,
       message: `User ${id} updated`,
-      data: await this.usersService.update(id, payload)
-    }
+      data: await this.usersService.update(id, payload),
+    };
   }
 
   @Delete(':id')
