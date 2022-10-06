@@ -1,11 +1,17 @@
-import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, OneToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  JoinColumn,
+  OneToOne,
+} from 'typeorm';
 import { User } from './user.entity';
 
 @Entity({ name: 'clients' })
 export class Client {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-  
+
   @Column({
     type: 'varchar',
     length: 255,
@@ -43,12 +49,12 @@ export class Client {
 
   @Column({
     type: 'enum',
-    enum: ['femenino' , 'masculino' , 'otro'],
+    enum: ['Femenino', 'Masculino', 'Otro'],
     nullable: false,
     unique: false,
     name: 'gender',
   })
-  gender: 'femenino' | 'masculino' | 'otro';
+  gender: 'Femenino' | 'Masculino' | 'Otro';
 
   @Column({
     type: 'varchar',
@@ -57,7 +63,7 @@ export class Client {
     unique: false,
     name: 'address',
   })
-  addresss: string;
+  address: string;
 
   @Column({
     type: 'varchar',
@@ -72,12 +78,12 @@ export class Client {
     type: 'boolean',
     nullable: false,
     default: false,
-    name: 'subscribed_ews',
+    name: 'news_subscriber',
   })
-  subscribedNews: boolean;
+  newsSubscriber: boolean;
 
   @Column({
-    type: 'array',
+    type: 'json',
     nullable: false,
     unique: false,
     name: 'preferences',
@@ -85,6 +91,6 @@ export class Client {
   preferences: Array<string>;
 
   @OneToOne(() => User)
-    @JoinColumn({name: 'user_id'})
-    User: User
+  @JoinColumn({ name: 'user_id' })
+  User: User;
 }

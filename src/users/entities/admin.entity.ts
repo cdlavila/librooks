@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, OneToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  JoinColumn,
+  OneToOne,
+} from 'typeorm';
 import { User } from './user.entity';
 
 @Entity({ name: 'admins' })
@@ -35,7 +41,7 @@ export class Admin {
 
   @Column({
     type: 'enum',
-    enum: ['femenino' , 'masculino' , 'otro'],
+    enum: ['femenino', 'masculino', 'otro'],
     nullable: false,
     unique: false,
     name: 'gender',
@@ -60,6 +66,6 @@ export class Admin {
   dateOfBirth: Date;
 
   @OneToOne(() => User)
-    @JoinColumn({name: 'user_id'})
-    User: User
+  @JoinColumn({ name: 'user_id' })
+  User: User;
 }
