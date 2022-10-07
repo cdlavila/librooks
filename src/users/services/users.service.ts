@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from '../dtos/users.dtos';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -38,5 +39,17 @@ export class UsersService {
       throw new NotFoundException(`User ${id} not found`);
     }
     return this.usersRepository.delete(id);
+  }
+
+  async login(username: string, password: string) {
+    const user = await this.usersRepository.findOne({ where: { username } });
+    if (!user) {
+      throw new NotFoundException(`Usuario ${username} no encontrado`);
+    }
+    const isMatch: boolean = bcrypt.compare(password, user?.password);
+    if (!isMatch) {
+      throw new NotFoundException(`El usuario y la contraseña no coinciden`);
+    }
+    return user;
   }
 }
