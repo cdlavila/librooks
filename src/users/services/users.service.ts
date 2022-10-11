@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from '../dtos/users.dtos';
-import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -19,7 +18,17 @@ export class UsersService {
   async findOne(id: string) {
     const user = await this.usersRepository.findOne({ where: { id } });
     if (!user) {
-      throw new NotFoundException(`User ${id} not found`);
+      throw new NotFoundException(`Usuario ${id} no encontrado`);
+    }
+    return user;
+  }
+
+  async findByUsernameOrEmail(username: string) {
+    const user = await this.usersRepository.findOne({
+      where: [{ username }, { email: username }],
+    });
+    if (!user) {
+      throw new NotFoundException(`Usuario ${username} no encontrado`);
     }
     return user;
   }
@@ -27,7 +36,7 @@ export class UsersService {
   async update(id: string, changes: CreateUserDto) {
     const user = await this.usersRepository.findOne({ where: { id } });
     if (!user) {
-      throw new NotFoundException(`User ${id} not found`);
+      throw new NotFoundException(`Usuario ${id} no encontrado`);
     }
     this.usersRepository.merge(user, changes);
     return this.usersRepository.save(user);
@@ -36,20 +45,8 @@ export class UsersService {
   async delete(id: string) {
     const user = await this.usersRepository.findOne({ where: { id } });
     if (!user) {
-      throw new NotFoundException(`User ${id} not found`);
+      throw new NotFoundException(`Usuario ${id} no encontrado`);
     }
     return this.usersRepository.delete(id);
-  }
-
-  async login(username: string, password: string) {
-    const user = await this.usersRepository.findOne({ where: { username } });
-    if (!user) {
-      throw new NotFoundException(`Usuario ${username} no encontrado`);
-    }
-    const isMatch: boolean = bcrypt.compare(password, user?.password);
-    if (!isMatch) {
-      throw new NotFoundException(`El usuario y la contraseña no coinciden`);
-    }
-    return user;
   }
 }

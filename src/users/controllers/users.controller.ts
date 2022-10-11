@@ -10,7 +10,7 @@ import {
   HttpCode,
 } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
-import { CreateUserDto, LoginUserDto } from '../dtos/users.dtos';
+import { CreateUserDto } from '../dtos/users.dtos';
 
 @Controller('users')
 export class UsersController {
@@ -21,7 +21,7 @@ export class UsersController {
   async create(@Body() payload: CreateUserDto) {
     return {
       statusCode: HttpStatus.CREATED,
-      message: 'User created',
+      message: 'Usuario creado exitosamente',
       data: await this.usersService.create(payload),
     };
   }
@@ -31,7 +31,7 @@ export class UsersController {
   async findById(@Param('id') id: string) {
     return {
       statusCode: HttpStatus.OK,
-      message: `User ${id} found`,
+      message: `Usuario ${id} encontrado`,
       data: await this.usersService.findOne(id),
     };
   }
@@ -41,7 +41,7 @@ export class UsersController {
   async update(@Param('id') id: string, @Body() payload: CreateUserDto) {
     return {
       statusCode: HttpStatus.OK,
-      message: `User ${id} updated`,
+      message: `Usuario ${id} actualizado`,
       data: await this.usersService.update(id, payload),
     };
   }
@@ -50,15 +50,5 @@ export class UsersController {
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param('id') id: string) {
     return this.usersService.delete(id);
-  }
-
-  @Post('login')
-  @HttpCode(HttpStatus.OK)
-  async login(@Body() payload: LoginUserDto) {
-    return {
-      statusCode: HttpStatus.OK,
-      message: 'User logged in successfully',
-      data: await this.usersService.login(payload?.username, payload?.password),
-    };
   }
 }
