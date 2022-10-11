@@ -49,15 +49,6 @@ export class Admin {
   gender: 'femenino' | 'masculino' | 'otro';
 
   @Column({
-    type: 'varchar',
-    length: 255,
-    nullable: false,
-    unique: true,
-    name: 'email',
-  })
-  email: string;
-
-  @Column({
     type: 'date',
     nullable: false,
     unique: false,

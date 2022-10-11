@@ -19,6 +19,15 @@ export class User {
     type: 'varchar',
     length: 255,
     nullable: false,
+    unique: true,
+    name: 'email',
+  })
+  email: string;
+
+  @Column({
+    type: 'varchar',
+    length: 255,
+    nullable: false,
     name: 'password',
     transformer: {
       from: (value: string) => value,
