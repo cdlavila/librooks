@@ -8,9 +8,11 @@ import {
   Body,
   HttpStatus,
   HttpCode,
+  // UseGuards,
 } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { CreateUserDto } from '../dtos/users.dtos';
+// import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -26,6 +28,7 @@ export class UsersController {
     };
   }
 
+  // @UseGuards(JwtAuthGuard)
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   async findById(@Param('id') id: string) {
