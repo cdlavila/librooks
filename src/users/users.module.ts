@@ -12,5 +12,6 @@ import { AdminsController } from './controllers/admins.controller';
   imports: [TypeOrmModule.forFeature([User, Admin, Client])],
   controllers: [UsersController, AdminsController],
   providers: [UsersService, AdminsService],
+  exports: [UsersService],
 })
 export class UsersModule {}
