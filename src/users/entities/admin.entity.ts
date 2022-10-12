@@ -28,7 +28,7 @@ export class Admin {
     unique: false,
     name: 'last_name',
   })
-  lastname: string;
+  lastName: string;
 
   @Column({
     type: 'varchar',
@@ -41,12 +41,12 @@ export class Admin {
 
   @Column({
     type: 'enum',
-    enum: ['femenino', 'masculino', 'otro'],
+    enum: ['Femenino', 'Masculino', 'Otro'],
     nullable: false,
     unique: false,
     name: 'gender',
   })
-  gender: 'femenino' | 'masculino' | 'otro';
+  gender: 'Femenino' | 'Masculino' | 'Otro';
 
   @Column({
     type: 'date',
@@ -58,5 +58,5 @@ export class Admin {
 
   @OneToOne(() => User)
   @JoinColumn({ name: 'user_id' })
-  User: User;
+  user: User;
 }
