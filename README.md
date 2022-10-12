@@ -41,6 +41,13 @@ Install dependencies
 $ npm install
 ```
 
+#### Step 5
+Run migrations
+
+```bash
+$ npm run migrations:run
+```
+
 ## Running the app
 
 ```bash

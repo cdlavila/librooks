@@ -18,7 +18,17 @@ export class UsersService {
   async findOne(id: string) {
     const user = await this.usersRepository.findOne({ where: { id } });
     if (!user) {
-      throw new NotFoundException(`User ${id} not found`);
+      throw new NotFoundException(`Usuario ${id} no encontrado`);
+    }
+    return user;
+  }
+
+  async findByUsernameOrEmail(username: string) {
+    const user = await this.usersRepository.findOne({
+      where: [{ username }, { email: username }],
+    });
+    if (!user) {
+      throw new NotFoundException(`Usuario ${username} no encontrado`);
     }
     return user;
   }
@@ -26,7 +36,7 @@ export class UsersService {
   async update(id: string, changes: CreateUserDto) {
     const user = await this.usersRepository.findOne({ where: { id } });
     if (!user) {
-      throw new NotFoundException(`User ${id} not found`);
+      throw new NotFoundException(`Usuario ${id} no encontrado`);
     }
     this.usersRepository.merge(user, changes);
     return this.usersRepository.save(user);
@@ -35,7 +45,7 @@ export class UsersService {
   async delete(id: string) {
     const user = await this.usersRepository.findOne({ where: { id } });
     if (!user) {
-      throw new NotFoundException(`User ${id} not found`);
+      throw new NotFoundException(`Usuario ${id} no encontrado`);
     }
     return this.usersRepository.delete(id);
   }
