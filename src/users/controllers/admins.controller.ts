@@ -36,7 +36,7 @@ export class AdminsController {
     };
   }
 
-  @Get(':id')
+  @Get()
   @HttpCode(HttpStatus.OK)
   async findAll() {
     return {
