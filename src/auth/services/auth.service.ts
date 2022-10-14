@@ -24,4 +24,18 @@ export class AuthService {
     });
     return { user, token };
   }
+
+  async refresh(userId: string) {
+    const user = await this.usersService.findOne(userId);
+    const token = this.jwtService.sign({
+      id: user?.id,
+      role: user?.role,
+    });
+    return { user, token };
+  }
+
+  async validate(userId: string) {
+    await this.usersService.findOne(userId);
+    return null;
+  }
 }
