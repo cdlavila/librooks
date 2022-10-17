@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { AdminsService } from '../services/admins.service';
 import { CreateAdminDto } from '../dtos/admins.dtos';
+import { CreateUserDto } from '../dtos/users.dtos';
 
 @Controller('admins')
 export class AdminsController {
@@ -18,11 +19,14 @@ export class AdminsController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async create(@Body() payload: CreateAdminDto) {
+  async create(
+    @Body() userPayload: CreateUserDto,
+    @Body() adminPayload: CreateAdminDto,
+  ) {
     return {
       statusCode: HttpStatus.CREATED,
-      message: 'Administrador creado',
-      data: await this.adminsService.create(payload),
+      message: 'Administrador creado exitosamente',
+      data: await this.adminsService.create(userPayload, adminPayload),
     };
   }
 
@@ -31,7 +35,7 @@ export class AdminsController {
   async findById(@Param('id') id: string) {
     return {
       statusCode: HttpStatus.OK,
-      message: `Administrador ${id} encontrado`,
+      message: `Administrador ${id} encontrado existosamente`,
       data: await this.adminsService.findOne(id),
     };
   }
@@ -41,7 +45,7 @@ export class AdminsController {
   async findAll() {
     return {
       statusCode: HttpStatus.OK,
-      message: `Administradores encontrados`,
+      message: `Administradores encontrados exitosamente`,
       data: await this.adminsService.find(),
     };
   }
@@ -51,7 +55,7 @@ export class AdminsController {
   async update(@Param('id') id: string, @Body() payload: CreateAdminDto) {
     return {
       statusCode: HttpStatus.OK,
-      message: `Administrador ${id} actualizado`,
+      message: `Administrador ${id} actualizado exitosamente`,
       data: await this.adminsService.update(id, payload),
     };
   }
