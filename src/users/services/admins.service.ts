@@ -34,13 +34,22 @@ export class AdminsService {
     return this.adminsRepository.find();
   }
 
-  async update(id: string, changes: CreateAdminDto) {
-    const admin = await this.adminsRepository.findOne({ where: { id } });
+  async update(
+    id: string,
+    userChanges: CreateUserDto,
+    adminChanges: CreateAdminDto,
+  ) {
+    const admin = await this.adminsRepository.findOne({
+      where: { id },
+      relations: ['user'],
+    });
+
     if (!admin) {
       throw new NotFoundException(`Administrador ${id} no encontrado`);
     }
-    this.adminsRepository.merge(admin, changes);
-    return this.adminsRepository.save(admin);
+    const user = await this.usersService.update(admin?.user?.id, userChanges);
+    this.adminsRepository.merge(admin, adminChanges);
+    return this.adminsRepository.save({ ...admin, user });
   }
 
   async delete(id: string) {

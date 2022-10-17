@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from '../dtos/users.dtos';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -12,6 +13,7 @@ export class UsersService {
 
   create(data: CreateUserDto) {
     const newUser = this.usersRepository.create(data);
+    newUser.password = bcrypt.hashSync(newUser?.password, 10);
     return this.usersRepository.save(newUser);
   }
 
@@ -39,6 +41,9 @@ export class UsersService {
       throw new NotFoundException(`Usuario ${id} no encontrado`);
     }
     this.usersRepository.merge(user, changes);
+    if (changes.password) {
+      user.password = bcrypt.hashSync(changes.password, 10);
+    }
     return this.usersRepository.save(user);
   }
 

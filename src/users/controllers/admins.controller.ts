@@ -52,11 +52,15 @@ export class AdminsController {
 
   @Put(':id')
   @HttpCode(HttpStatus.OK)
-  async update(@Param('id') id: string, @Body() payload: CreateAdminDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() userPayload: CreateUserDto,
+    @Body() adminPayload: CreateAdminDto,
+  ) {
     return {
       statusCode: HttpStatus.OK,
       message: `Administrador ${id} actualizado exitosamente`,
-      data: await this.adminsService.update(id, payload),
+      data: await this.adminsService.update(id, userPayload, adminPayload),
     };
   }
 
