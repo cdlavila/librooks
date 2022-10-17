@@ -18,7 +18,10 @@ export class UsersService {
   }
 
   async findOne(id: string) {
-    const user = await this.usersRepository.findOne({ where: { id } });
+    const user = await this.usersRepository.findOne({
+      where: { id },
+      relations: ['admin', 'client'],
+    });
     if (!user) {
       throw new NotFoundException(`Usuario ${id} no encontrado`);
     }
@@ -28,6 +31,7 @@ export class UsersService {
   async findByUsernameOrEmail(username: string) {
     const user = await this.usersRepository.findOne({
       where: [{ username }, { email: username }],
+      relations: ['admin', 'client'],
     });
     if (!user) {
       throw new NotFoundException(`Usuario ${username} no encontrado`);
