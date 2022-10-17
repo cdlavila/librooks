@@ -10,8 +10,8 @@ import {
   HttpCode,
 } from '@nestjs/common';
 import { AdminsService } from '../services/admins.service';
-import { CreateAdminDto } from '../dtos/admins.dtos';
-import { CreateUserDto } from '../dtos/users.dtos';
+import { CreateAdminDto } from '../dtos/admins.dto';
+import { CreateUserDto } from '../dtos/users.dto';
 
 @Controller('admins')
 export class AdminsController {

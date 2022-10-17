@@ -6,11 +6,13 @@ import { Admin } from './entities/admin.entity';
 import { Client } from './entities/client.entity';
 import { AdminsService } from './services/admins.service';
 import { AdminsController } from './controllers/admins.controller';
+import { ClientsService } from './services/clients.service';
+import { ClientsController } from './controllers/clients.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, Admin, Client])],
-  controllers: [AdminsController],
-  providers: [AdminsService, UsersService],
+  controllers: [AdminsController, ClientsController],
+  providers: [AdminsService, UsersService, ClientsService],
   exports: [UsersService],
 })
 export class UsersModule {}
