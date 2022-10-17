@@ -13,7 +13,7 @@ export class AdminsService {
     private usersService: UsersService,
   ) {}
 
-  async create(userData: CreateUserDto, adminData: CreateAdminDto) {
+  async create(adminData: CreateAdminDto, userData: CreateUserDto) {
     const newUser = await this.usersService.create(userData);
     const newAdmin = this.adminsRepository.create({
       ...adminData,
@@ -23,21 +23,24 @@ export class AdminsService {
   }
 
   async findOne(id: string) {
-    const admin = await this.adminsRepository.findOne({ where: { id } });
+    const admin = await this.adminsRepository.findOne({
+      where: { id },
+      relations: ['user'],
+    });
     if (!admin) {
       throw new NotFoundException(`Administrador ${id} no encontrado`);
     }
     return admin;
   }
 
-  async find() {
+  async findAll() {
     return this.adminsRepository.find();
   }
 
   async update(
     id: string,
-    userChanges: CreateUserDto,
     adminChanges: CreateAdminDto,
+    userChanges: CreateUserDto,
   ) {
     const admin = await this.adminsRepository.findOne({
       where: { id },
@@ -53,10 +56,13 @@ export class AdminsService {
   }
 
   async delete(id: string) {
-    const admin = await this.adminsRepository.findOne({ where: { id } });
+    const admin = await this.adminsRepository.findOne({
+      where: { id },
+      relations: ['user'],
+    });
     if (!admin) {
       throw new NotFoundException(`Administrador ${id} no encontrado`);
     }
-    return this.adminsRepository.delete(id);
+    return this.usersService.delete(admin?.user?.id);
   }
 }

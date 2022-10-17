@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from 'typeorm';
+import { Admin } from './admin.entity';
+import { Client } from './client.entity';
 
 @Entity({ name: 'users' })
 export class User {
@@ -47,4 +49,14 @@ export class User {
     name: 'is_active',
   })
   isActive: boolean;
+
+  @OneToOne(() => Admin, (admin) => admin.user, {
+    nullable: true,
+  })
+  admin: Admin;
+
+  @OneToOne(() => Client, (client) => client.user, {
+    nullable: true,
+  })
+  client: Client;
 }

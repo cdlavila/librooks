@@ -56,7 +56,10 @@ export class Admin {
   })
   dateOfBirth: Date;
 
-  @OneToOne(() => User)
+  @OneToOne(() => User, (user) => user.admin, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'user_id' })
   user: User;
 }

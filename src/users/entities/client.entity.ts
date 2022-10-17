@@ -81,7 +81,10 @@ export class Client {
   })
   preferences: Array<string>;
 
-  @OneToOne(() => User)
+  @OneToOne(() => User, (user) => user.client, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'user_id' })
   user: User;
 }

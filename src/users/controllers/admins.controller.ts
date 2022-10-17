@@ -20,13 +20,13 @@ export class AdminsController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async create(
-    @Body() userPayload: CreateUserDto,
     @Body() adminPayload: CreateAdminDto,
+    @Body('user') userPayload: CreateUserDto,
   ) {
     return {
       statusCode: HttpStatus.CREATED,
       message: 'Administrador creado exitosamente',
-      data: await this.adminsService.create(userPayload, adminPayload),
+      data: await this.adminsService.create(adminPayload, userPayload),
     };
   }
 
@@ -46,7 +46,7 @@ export class AdminsController {
     return {
       statusCode: HttpStatus.OK,
       message: `Administradores encontrados exitosamente`,
-      data: await this.adminsService.find(),
+      data: await this.adminsService.findAll(),
     };
   }
 
@@ -54,13 +54,13 @@ export class AdminsController {
   @HttpCode(HttpStatus.OK)
   async update(
     @Param('id') id: string,
-    @Body() userPayload: CreateUserDto,
     @Body() adminPayload: CreateAdminDto,
+    @Body('user') userPayload: CreateUserDto,
   ) {
     return {
       statusCode: HttpStatus.OK,
       message: `Administrador ${id} actualizado exitosamente`,
-      data: await this.adminsService.update(id, userPayload, adminPayload),
+      data: await this.adminsService.update(id, adminPayload, userPayload),
     };
   }
 
