@@ -22,7 +22,7 @@ export class ClientsService {
     return this.clientsRepository.save(newClient);
   }
 
-  async findOne(id: string) {
+  async findMyself(id: string) {
     const client = await this.clientsRepository.findOne({
       where: { id },
       relations: ['user'],
@@ -33,11 +33,12 @@ export class ClientsService {
     return client;
   }
 
-  async update(
+  async updateMyself(
     id: string,
     clientChanges: CreateClientDto,
     userChanges: CreateUserDto,
   ) {
+    console.log(id);
     const client = await this.clientsRepository.findOne({
       where: { id },
       relations: ['user'],

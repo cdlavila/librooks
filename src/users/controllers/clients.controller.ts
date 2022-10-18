@@ -5,13 +5,15 @@ import {
   HttpStatus,
   Post,
   Put,
-  Param,
   Get,
   Delete,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { ClientsService } from '../services/clients.service';
 import { CreateClientDto } from '../dtos/clients.dto';
 import { CreateUserDto } from '../dtos/users.dto';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 
 @Controller('clients')
 export class ClientsController {
@@ -30,32 +32,40 @@ export class ClientsController {
     };
   }
 
-  @Get(':id')
-  async findById(@Param('id') id: string) {
+  @Get('myself')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  async findMyself(@Req() req: any) {
     return {
       statusCode: HttpStatus.OK,
-      message: `Cliente ${id} encontrado exitosamente`,
-      data: await this.clientsService.findOne(id),
+      message: `Cliente ${req?.user?.userId} encontrado exitosamente`,
+      data: await this.clientsService.findMyself(req?.user?.client?.id),
     };
   }
 
-  @Put(':id')
+  @Put('myself')
   @HttpCode(HttpStatus.OK)
-  async update(
-    @Param('id') id: string,
+  @UseGuards(JwtAuthGuard)
+  async updateMyself(
+    @Req() req: any,
     @Body() clientPayload: CreateClientDto,
     @Body('user') userPayload: CreateUserDto,
   ) {
     return {
       statusCode: HttpStatus.OK,
       message: 'Cliente actualizado exitosamente',
-      data: await this.clientsService.update(id, clientPayload, userPayload),
+      data: await this.clientsService.updateMyself(
+        req?.user?.client?.id,
+        clientPayload,
+        userPayload,
+      ),
     };
   }
 
-  @Delete(':id')
+  @Delete('myself')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async delete(@Param('id') id: string) {
-    return this.clientsService.delete(id);
+  @UseGuards(JwtAuthGuard)
+  async delete(@Req() req: any) {
+    return this.clientsService.delete(req?.user?.client?.id);
   }
 }
