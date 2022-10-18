@@ -28,7 +28,7 @@ export class Client {
     unique: false,
     name: 'last_name',
   })
-  lastname: string;
+  lastName: string;
 
   @Column({
     type: 'varchar',
