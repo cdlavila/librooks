@@ -8,10 +8,13 @@ import {
   Body,
   HttpStatus,
   HttpCode,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { AdminsService } from '../services/admins.service';
 import { CreateAdminDto } from '../dtos/admins.dto';
 import { CreateUserDto } from '../dtos/users.dto';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 
 @Controller('admins')
 export class AdminsController {
@@ -27,6 +30,17 @@ export class AdminsController {
       statusCode: HttpStatus.CREATED,
       message: 'Administrador creado exitosamente',
       data: await this.adminsService.create(adminPayload, userPayload),
+    };
+  }
+
+  @Get('myself')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  async findMyself(@Req() req: any) {
+    return {
+      statusCode: HttpStatus.OK,
+      message: `Administrador ${req?.user?.admin?.id} encontrado existosamente`,
+      data: await this.adminsService.findOne(req?.user?.admin?.id),
     };
   }
 
@@ -50,6 +64,25 @@ export class AdminsController {
     };
   }
 
+  @Put('myself')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  async updateMyself(
+    @Req() req: any,
+    @Body() adminPayload: CreateAdminDto,
+    @Body('user') userPayload: CreateUserDto,
+  ) {
+    return {
+      statusCode: HttpStatus.OK,
+      message: `Administrador ${req?.user?.admin?.id} actualizado exitosamente`,
+      data: await this.adminsService.update(
+        req?.user?.admin?.id,
+        adminPayload,
+        userPayload,
+      ),
+    };
+  }
+
   @Put(':id')
   @HttpCode(HttpStatus.OK)
   async update(
@@ -64,9 +97,16 @@ export class AdminsController {
     };
   }
 
+  @Delete('myself')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @UseGuards(JwtAuthGuard)
+  async deleteMyself(@Req() req: any) {
+    return this.adminsService.delete(req?.user?.admin?.id);
+  }
+
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async remove(@Param('id') id: string) {
+  async delete(@Param('id') id: string) {
     return this.adminsService.delete(id);
   }
 }
