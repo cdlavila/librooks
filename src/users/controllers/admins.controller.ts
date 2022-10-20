@@ -15,6 +15,9 @@ import { AdminsService } from '../services/admins.service';
 import { CreateAdminDto } from '../dtos/admins.dto';
 import { CreateUserDto } from '../dtos/users.dto';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../../auth/guards/roles.guard';
+import { Roles } from '../../auth/decorators/roles.decorator';
+import { Role } from '../../auth/enums/role.enum';
 
 @Controller('admins')
 export class AdminsController {
@@ -22,6 +25,8 @@ export class AdminsController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Root)
   async create(
     @Body() adminPayload: CreateAdminDto,
     @Body('user') userPayload: CreateUserDto,
@@ -33,29 +38,10 @@ export class AdminsController {
     };
   }
 
-  @Get('myself')
-  @HttpCode(HttpStatus.OK)
-  @UseGuards(JwtAuthGuard)
-  async findMyself(@Req() req: any) {
-    return {
-      statusCode: HttpStatus.OK,
-      message: `Administrador ${req?.user?.admin?.id} encontrado existosamente`,
-      data: await this.adminsService.findOne(req?.user?.admin?.id),
-    };
-  }
-
-  @Get(':id')
-  @HttpCode(HttpStatus.OK)
-  async findById(@Param('id') id: string) {
-    return {
-      statusCode: HttpStatus.OK,
-      message: `Administrador ${id} encontrado existosamente`,
-      data: await this.adminsService.findOne(id),
-    };
-  }
-
   @Get()
   @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Root)
   async findAll() {
     return {
       statusCode: HttpStatus.OK,
@@ -64,9 +50,50 @@ export class AdminsController {
     };
   }
 
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Root)
+  async findById(@Param('id') id: string) {
+    return {
+      statusCode: HttpStatus.OK,
+      message: `Administrador ${id} encontrado existosamente`,
+      data: await this.adminsService.findOne(id),
+    };
+  }
+
+  @Get('myself')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
+  async findMyself(@Req() req: any) {
+    return {
+      statusCode: HttpStatus.OK,
+      message: `Administrador ${req?.user?.admin?.id} encontrado existosamente`,
+      data: await this.adminsService.findOne(req?.user?.admin?.id),
+    };
+  }
+
+  @Put(':id')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Root)
+  async update(
+    @Param('id') id: string,
+    @Body() adminPayload: CreateAdminDto,
+    @Body('user') userPayload: CreateUserDto,
+  ) {
+    return {
+      statusCode: HttpStatus.OK,
+      message: `Administrador ${id} actualizado exitosamente`,
+      data: await this.adminsService.update(id, adminPayload, userPayload),
+    };
+  }
+
   @Put('myself')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
   async updateMyself(
     @Req() req: any,
     @Body() adminPayload: CreateAdminDto,
@@ -83,30 +110,20 @@ export class AdminsController {
     };
   }
 
-  @Put(':id')
-  @HttpCode(HttpStatus.OK)
-  async update(
-    @Param('id') id: string,
-    @Body() adminPayload: CreateAdminDto,
-    @Body('user') userPayload: CreateUserDto,
-  ) {
-    return {
-      statusCode: HttpStatus.OK,
-      message: `Administrador ${id} actualizado exitosamente`,
-      data: await this.adminsService.update(id, adminPayload, userPayload),
-    };
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Root)
+  async delete(@Param('id') id: string) {
+    return this.adminsService.delete(id);
   }
 
   @Delete('myself')
   @HttpCode(HttpStatus.NO_CONTENT)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
   @UseGuards(JwtAuthGuard)
   async deleteMyself(@Req() req: any) {
     return this.adminsService.delete(req?.user?.admin?.id);
-  }
-
-  @Delete(':id')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  async delete(@Param('id') id: string) {
-    return this.adminsService.delete(id);
   }
 }

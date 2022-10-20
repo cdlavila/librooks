@@ -14,6 +14,9 @@ import { ClientsService } from '../services/clients.service';
 import { CreateClientDto } from '../dtos/clients.dto';
 import { CreateUserDto } from '../dtos/users.dto';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../../auth/guards/roles.guard';
+import { Roles } from '../../auth/decorators/roles.decorator';
+import { Role } from '../../auth/enums/role.enum';
 
 @Controller('clients')
 export class ClientsController {
@@ -34,7 +37,8 @@ export class ClientsController {
 
   @Get('myself')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Client)
   async findMyself(@Req() req: any) {
     return {
       statusCode: HttpStatus.OK,
@@ -45,7 +49,8 @@ export class ClientsController {
 
   @Put('myself')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Client)
   async updateMyself(
     @Req() req: any,
     @Body() clientPayload: CreateClientDto,
@@ -64,7 +69,8 @@ export class ClientsController {
 
   @Delete('myself')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Client)
   async delete(@Req() req: any) {
     return this.clientsService.delete(req?.user?.client?.id);
   }
