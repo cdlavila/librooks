@@ -38,7 +38,6 @@ export class ClientsService {
     clientChanges: CreateClientDto,
     userChanges: CreateUserDto,
   ) {
-    console.log(id);
     const client = await this.clientsRepository.findOne({
       where: { id },
       relations: ['user'],

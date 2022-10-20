@@ -57,7 +57,7 @@ export class AdminsController {
   async findMyself(@Req() req: any) {
     return {
       statusCode: HttpStatus.OK,
-      message: `Administrador ${req?.user?.admin?.id} encontrado existosamente`,
+      message: `Administrador ${req?.user?.admin?.id} encontrado exitosamente`,
       data: await this.adminsService.findOne(req?.user?.admin?.id),
     };
   }
@@ -69,7 +69,7 @@ export class AdminsController {
   async findById(@Param('id') id: string) {
     return {
       statusCode: HttpStatus.OK,
-      message: `Administrador ${id} encontrado existosamente`,
+      message: `Administrador ${id} encontrado exitosamente`,
       data: await this.adminsService.findOne(id),
     };
   }
