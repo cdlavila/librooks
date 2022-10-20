@@ -50,18 +50,6 @@ export class AdminsController {
     };
   }
 
-  @Get(':id')
-  @HttpCode(HttpStatus.OK)
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.Root)
-  async findById(@Param('id') id: string) {
-    return {
-      statusCode: HttpStatus.OK,
-      message: `Administrador ${id} encontrado existosamente`,
-      data: await this.adminsService.findOne(id),
-    };
-  }
-
   @Get('myself')
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -74,19 +62,15 @@ export class AdminsController {
     };
   }
 
-  @Put(':id')
+  @Get(':id')
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Root)
-  async update(
-    @Param('id') id: string,
-    @Body() adminPayload: CreateAdminDto,
-    @Body('user') userPayload: CreateUserDto,
-  ) {
+  async findById(@Param('id') id: string) {
     return {
       statusCode: HttpStatus.OK,
-      message: `Administrador ${id} actualizado exitosamente`,
-      data: await this.adminsService.update(id, adminPayload, userPayload),
+      message: `Administrador ${id} encontrado existosamente`,
+      data: await this.adminsService.findOne(id),
     };
   }
 
@@ -110,12 +94,20 @@ export class AdminsController {
     };
   }
 
-  @Delete(':id')
-  @HttpCode(HttpStatus.NO_CONTENT)
+  @Put(':id')
+  @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Root)
-  async delete(@Param('id') id: string) {
-    return this.adminsService.delete(id);
+  async update(
+    @Param('id') id: string,
+    @Body() adminPayload: CreateAdminDto,
+    @Body('user') userPayload: CreateUserDto,
+  ) {
+    return {
+      statusCode: HttpStatus.OK,
+      message: `Administrador ${id} actualizado exitosamente`,
+      data: await this.adminsService.update(id, adminPayload, userPayload),
+    };
   }
 
   @Delete('myself')
@@ -125,5 +117,13 @@ export class AdminsController {
   @UseGuards(JwtAuthGuard)
   async deleteMyself(@Req() req: any) {
     return this.adminsService.delete(req?.user?.admin?.id);
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Root)
+  async delete(@Param('id') id: string) {
+    return this.adminsService.delete(id);
   }
 }
