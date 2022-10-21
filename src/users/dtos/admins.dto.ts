@@ -2,30 +2,36 @@ import {
   IsDate,
   IsNotEmpty,
   IsString,
-  IsEnum,
+  IsIn,
   MinDate,
   MaxDate,
 } from 'class-validator';
 
 export class CreateAdminDto {
-  @IsString({ message: 'El nombre no es válido' })
-  @IsNotEmpty({ message: 'El nombre no puede estar vacío' })
+  @IsNotEmpty({ message: 'El nombre es obligatorio' })
+  @IsString({ message: 'El nombre debe ser un texto' })
   readonly firstName: string;
-  @IsString({ message: 'El apellido no es válido' })
-  @IsNotEmpty({ message: 'El apellido no puede estar vacío' })
+
+  @IsNotEmpty({ message: 'El apellido es obligatorio' })
+  @IsString({ message: 'El apellido debe ser un texto' })
   readonly lastName: string;
+
+  @IsNotEmpty({ message: 'La fecha de nacimiento es obligatoria' })
   @IsDate({ message: 'La fecha de nacimiento debe ser una fecha válida' })
-  @IsNotEmpty({ message: 'La fecha de nacimiento no puede estar vacía' })
-  @MinDate(new Date('1930-01-01'), {
-    message: 'La fecha de nacimiento no es válida',
+  @MinDate(new Date('1900-01-01'), {
+    message: 'La fecha de nacimiento es muy antigua',
   })
-  @MaxDate(new Date('2009-01-01'), {
-    message: 'La fecha de nacimiento no es válida',
+  @MaxDate(new Date(), {
+    message: 'La fecha de nacimiento no puede ser mayor a la fecha actual',
   })
   readonly dateOfBirth: Date;
-  @IsString({ message: 'El lugar de nacimiento no es válido' })
+
+  @IsNotEmpty({ message: 'El lugar de nacimiento es obligatorio' })
+  @IsString({ message: 'El lugar de nacimiento debe ser un texto' })
   readonly placeOfBirth: string;
-  @IsEnum(['Masculino', 'Femenino', 'Otro'], {
+
+  @IsNotEmpty({ message: 'El género es obligatorio' })
+  @IsIn(['Masculino', 'Femenino', 'Otro'], {
     message: 'El género no es válido',
   })
   readonly gender: 'Masculino' | 'Femenino' | 'Otro';
