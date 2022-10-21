@@ -23,7 +23,7 @@ export class CreateUserDto {
   readonly password: string;
 
   @IsNotEmpty({ message: 'El rol es obligatorio' })
-  @IsIn(['Masculino', 'Femenino', 'Otro'], {
+  @IsIn(['root', 'admin', 'client'], {
     message: 'El rol no es válido',
   })
   readonly role: 'root' | 'admin' | 'client';
