@@ -1,10 +1,10 @@
 import {
-  IsDate,
   IsNotEmpty,
   IsString,
   IsIn,
-  MinDate,
-  MaxDate,
+  // IsDate,
+  // MinDate,
+  // MaxDate,
 } from 'class-validator';
 
 export class CreateAdminDto {
@@ -17,13 +17,13 @@ export class CreateAdminDto {
   readonly lastName: string;
 
   @IsNotEmpty({ message: 'La fecha de nacimiento es obligatoria' })
-  @IsDate({ message: 'La fecha de nacimiento debe ser una fecha válida' })
-  @MinDate(new Date('1900-01-01'), {
-    message: 'La fecha de nacimiento es muy antigua',
-  })
-  @MaxDate(new Date(), {
-    message: 'La fecha de nacimiento no puede ser mayor a la fecha actual',
-  })
+  // @IsDate({ message: 'La fecha de nacimiento debe ser una fecha válida' })
+  // @MinDate(new Date('1900-01-01'), {
+  //   message: 'La fecha de nacimiento es muy antigua',
+  // })
+  // @MaxDate(new Date(), {
+  //   message: 'La fecha de nacimiento no puede ser mayor a la fecha actual',
+  // })
   readonly dateOfBirth: Date;
 
   @IsNotEmpty({ message: 'El lugar de nacimiento es obligatorio' })
