@@ -11,8 +11,8 @@ import {
   Req,
 } from '@nestjs/common';
 import { ClientsService } from '../services/clients.service';
-import { CreateClientDto } from '../dtos/clients.dto';
-import { CreateUserDto } from '../dtos/users.dto';
+import { CreateClientDto, UpdateClientDto } from '../dtos/clients.dto';
+import { CreateUserDto, UpdateUserDto } from '../dtos/users.dto';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../../auth/guards/roles.guard';
 import { Roles } from '../../auth/decorators/roles.decorator';
@@ -53,8 +53,8 @@ export class ClientsController {
   @Roles(Role.Client)
   async updateMyself(
     @Req() req: any,
-    @Body() clientPayload: CreateClientDto,
-    @Body('user') userPayload: CreateUserDto,
+    @Body() clientPayload: UpdateClientDto,
+    @Body('user') userPayload: UpdateUserDto,
   ) {
     return {
       statusCode: HttpStatus.OK,

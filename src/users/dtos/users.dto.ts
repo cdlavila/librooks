@@ -6,6 +6,7 @@ import {
   IsEmail,
   IsByteLength,
 } from 'class-validator';
+import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateUserDto {
   @IsNotEmpty({ message: 'El nombre de usuario es obligatorio' })
@@ -32,3 +33,5 @@ export class CreateUserDto {
   @IsBoolean({ message: 'El esta activo debe ser un booleano' })
   readonly isActive: boolean;
 }
+
+export class UpdateUserDto extends PartialType(CreateUserDto) {}

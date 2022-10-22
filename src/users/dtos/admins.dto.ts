@@ -6,6 +6,7 @@ import {
   // MinDate,
   // MaxDate,
 } from 'class-validator';
+import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateAdminDto {
   @IsNotEmpty({ message: 'El nombre es obligatorio' })
@@ -36,3 +37,5 @@ export class CreateAdminDto {
   })
   readonly gender: 'Masculino' | 'Femenino' | 'Otro';
 }
+
+export class UpdateAdminDto extends PartialType(CreateAdminDto) {}

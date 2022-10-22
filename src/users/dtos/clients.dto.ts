@@ -8,6 +8,8 @@ import {
   // MinDate,
   // MaxDate,
 } from 'class-validator';
+import { PartialType } from '@nestjs/mapped-types';
+
 export class CreateClientDto {
   @IsNotEmpty({ message: 'El nombre es obligatorio' })
   @IsString({ message: 'El nombre debe ser un texto' })
@@ -49,3 +51,5 @@ export class CreateClientDto {
   @IsArray({ message: 'Las preferencias deben ser un array' })
   readonly preferences: Array<string>;
 }
+
+export class UpdateClientDto extends PartialType(CreateClientDto) {}
