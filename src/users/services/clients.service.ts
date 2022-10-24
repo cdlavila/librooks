@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Client } from '../entities/client.entity';
-import { CreateClientDto } from '../dtos/clients.dto';
-import { CreateUserDto } from '../dtos/users.dto';
+import { CreateClientDto, UpdateClientDto } from '../dtos/clients.dto';
+import { CreateUserDto, UpdateUserDto } from '../dtos/users.dto';
 import { UsersService } from './users.service';
 
 @Injectable()
@@ -35,10 +35,9 @@ export class ClientsService {
 
   async updateMyself(
     id: string,
-    clientChanges: CreateClientDto,
-    userChanges: CreateUserDto,
+    clientChanges: UpdateClientDto,
+    userChanges: UpdateUserDto,
   ) {
-    console.log(id);
     const client = await this.clientsRepository.findOne({
       where: { id },
       relations: ['user'],

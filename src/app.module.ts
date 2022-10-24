@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
@@ -6,9 +6,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AppEnvironment } from './app.environment';
 import { AuthModule } from './auth/auth.module';
+import { JwtStrategy } from './auth/strategies/jwt.strategy';
+import { MailModule } from './mail/mail.module';
 import databaseConfig from './config/database.config';
 import authConfig from './config/auth.config';
-import { JwtStrategy } from './auth/strategies/jwt.strategy';
 
 @Module({
   imports: [
@@ -18,7 +19,9 @@ import { JwtStrategy } from './auth/strategies/jwt.strategy';
       isGlobal: true,
       cache: true,
     }),
+    CacheModule.register({ isGlobal: true }),
     DatabaseModule,
+    MailModule,
     UsersModule,
     AuthModule,
   ],

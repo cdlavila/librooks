@@ -12,8 +12,8 @@ import {
   Req,
 } from '@nestjs/common';
 import { AdminsService } from '../services/admins.service';
-import { CreateAdminDto } from '../dtos/admins.dto';
-import { CreateUserDto } from '../dtos/users.dto';
+import { CreateAdminDto, UpdateAdminDto } from '../dtos/admins.dto';
+import { CreateUserDto, UpdateUserDto } from '../dtos/users.dto';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../../auth/guards/roles.guard';
 import { Roles } from '../../auth/decorators/roles.decorator';
@@ -57,7 +57,7 @@ export class AdminsController {
   async findMyself(@Req() req: any) {
     return {
       statusCode: HttpStatus.OK,
-      message: `Administrador ${req?.user?.admin?.id} encontrado existosamente`,
+      message: `Administrador ${req?.user?.admin?.id} encontrado exitosamente`,
       data: await this.adminsService.findOne(req?.user?.admin?.id),
     };
   }
@@ -69,7 +69,7 @@ export class AdminsController {
   async findById(@Param('id') id: string) {
     return {
       statusCode: HttpStatus.OK,
-      message: `Administrador ${id} encontrado existosamente`,
+      message: `Administrador ${id} encontrado exitosamente`,
       data: await this.adminsService.findOne(id),
     };
   }
@@ -80,8 +80,8 @@ export class AdminsController {
   @Roles(Role.Admin)
   async updateMyself(
     @Req() req: any,
-    @Body() adminPayload: CreateAdminDto,
-    @Body('user') userPayload: CreateUserDto,
+    @Body() adminPayload: UpdateAdminDto,
+    @Body('user') userPayload: UpdateUserDto,
   ) {
     return {
       statusCode: HttpStatus.OK,
@@ -100,8 +100,8 @@ export class AdminsController {
   @Roles(Role.Root)
   async update(
     @Param('id') id: string,
-    @Body() adminPayload: CreateAdminDto,
-    @Body('user') userPayload: CreateUserDto,
+    @Body() adminPayload: UpdateAdminDto,
+    @Body('user') userPayload: UpdateUserDto,
   ) {
     return {
       statusCode: HttpStatus.OK,
