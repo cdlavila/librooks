@@ -71,14 +71,16 @@ export class AuthService {
     await this.mailService.sendMail(
       user?.email,
       '[LIBROOKS]: Recuperación de contraseña',
-      `Ingresa al siguiente enlace para recuperar tu contraseña: http://localhost:3001/request-password-reset?token=${token}`,
+      `Ingresa al siguiente enlace para recuperar tu contraseña: http://localhost:3001/password-reset?token=${token}`,
       false,
     );
     return true;
   }
 
   async validatePasswordResetToken(token: string) {
-    const { id } = this.jwtService.verify(token);
+    const { id } = this.jwtService.verify(token, {
+      ignoreExpiration: true,
+    });
     const cacheToken = await this.cacheManager.get(`user_${id}`);
     if (!cacheToken) {
       throw new ForbiddenException(
