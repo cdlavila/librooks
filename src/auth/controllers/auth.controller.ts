@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import { LoginDto } from '../dtos/login.dtos';
+import { PasswordResetDto } from '../dtos/password.reset.dtos';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 
 @Controller('auth')
@@ -45,6 +46,16 @@ export class AuthController {
       statusCode: HttpStatus.OK,
       message: 'Usuario autenticado exitosamente',
       data: await this.authService.refresh(req?.user.userId),
+    };
+  }
+
+  @Post('request-password-reset')
+  @HttpCode(HttpStatus.OK)
+  async requestPasswordReset(@Body() payload: PasswordResetDto) {
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'Solicitud de cambio de contraseña exitosa',
+      data: await this.authService.requestPasswordReset(payload?.email),
     };
   }
 }

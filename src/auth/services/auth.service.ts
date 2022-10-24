@@ -1,6 +1,7 @@
 import { Injectable, ForbiddenException } from '@nestjs/common';
 import { UsersService } from '../../users/services/users.service';
 import { JwtService } from '@nestjs/jwt';
+import { MailService } from '../../mail/services/mail.service';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -8,6 +9,7 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
+    private mailService: MailService,
   ) {}
 
   async login(username: string, password: string) {
@@ -41,5 +43,16 @@ export class AuthService {
       ...(user.admin && { admin: user?.admin }),
     });
     return { user, token };
+  }
+
+  async requestPasswordReset(email: string) {
+    const user = await this.usersService.findByUsernameOrEmail(email);
+    const code = Math.floor(Math.random() * (999999 - 100000) + 100000);
+    await this.mailService.sendMail(
+      user?.email,
+      '[LIBROOKS]: Recuperación de contraseña',
+      `Tu código para recuperar tu contraseña es: <h2>${code}</h2>`,
+      true,
+    );
   }
 }
