@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
@@ -8,7 +8,6 @@ import { AppEnvironment } from './app.environment';
 import { AuthModule } from './auth/auth.module';
 import { JwtStrategy } from './auth/strategies/jwt.strategy';
 import { MailModule } from './mail/mail.module';
-import { RedisModule } from './redis/redis.module';
 import databaseConfig from './config/database.config';
 import authConfig from './config/auth.config';
 
@@ -20,11 +19,11 @@ import authConfig from './config/auth.config';
       isGlobal: true,
       cache: true,
     }),
+    CacheModule.register({ isGlobal: true }),
     DatabaseModule,
     MailModule,
     UsersModule,
     AuthModule,
-    RedisModule,
   ],
   controllers: [AppController],
   providers: [AppService, JwtStrategy],
