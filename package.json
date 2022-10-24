@@ -26,6 +26,7 @@
     "migrations:drop": "npm run typeorm -- schema:drop -d src/data-source.ts"
   },
   "dependencies": {
+    "@nestjs-modules/mailer": "^1.8.1",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",
@@ -38,6 +39,7 @@
     "class-transformer": "^0.5.1",
     "dotenv": "^16.0.3",
     "mysql2": "^2.3.3",
+    "nodemailer": "^6.8.0",
     "passport-jwt": "^4.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
