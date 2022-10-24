@@ -18,8 +18,8 @@ export class CreateUserDto {
   readonly email: string;
 
   @IsNotEmpty({ message: 'La contraseña es obligatoria' })
-  @IsByteLength(8, 16, {
-    message: 'La contraseña debe tener entre 8 y 16 caracteres',
+  @IsByteLength(8, 32, {
+    message: 'La contraseña debe tener entre 8 y 32 caracteres',
   })
   readonly password: string;
 

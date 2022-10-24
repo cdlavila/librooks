@@ -87,4 +87,17 @@ export class AuthService {
     }
     return true;
   }
+
+  async resetPassword(token: string, password: string) {
+    const { id } = this.jwtService.verify(token);
+    const cacheToken = await this.cacheManager.get(`user_${id}`);
+    if (!cacheToken) {
+      throw new ForbiddenException(
+        `El token de recuperación de contraseña ha expirado`,
+      );
+    }
+    await this.usersService.update(id, { password });
+    await this.cacheManager.del(`user_${id}`);
+    return true;
+  }
 }
