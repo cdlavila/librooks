@@ -12,13 +12,13 @@ export class MailService {
     this.configService = configService;
   }
 
-  async sendMail(email: string, subject: string, text: string, html: boolean) {
+  async sendMail(email: string, subject: string, body: string, html: boolean) {
     await this.mailerService.sendMail({
       to: email,
       from: this.configService.get<string>('auth.email'),
       subject,
-      ...(!html && { text }),
-      ...(html && { html: text }),
+      ...(!html && { text: body }),
+      ...(html && { html: body }),
     });
   }
 }

@@ -47,12 +47,19 @@ export class AuthService {
 
   async requestPasswordReset(email: string) {
     const user = await this.usersService.findByUsernameOrEmail(email);
-    const code = Math.floor(Math.random() * (999999 - 100000) + 100000);
+    const token = this.jwtService.sign(
+      {
+        id: user?.id,
+        role: user?.role,
+      },
+      { expiresIn: '5m' },
+    );
     await this.mailService.sendMail(
       user?.email,
       '[LIBROOKS]: Recuperación de contraseña',
-      `Tu código para recuperar tu contraseña es: <h2>${code}</h2>`,
-      true,
+      `Ingresa al siguiente enlace para recuperar tu contraseña: http://localhost:3001/request-password-reset?token=${token}`,
+      false,
     );
+    return true;
   }
 }
