@@ -45,8 +45,8 @@ export class UsersService {
       throw new NotFoundException(`Usuario ${id} no encontrado`);
     }
     this.usersRepository.merge(user, changes);
-    if (changes.password) {
-      user.password = bcrypt.hashSync(changes.password, 10);
+    if (changes?.password) {
+      user.password = bcrypt.hashSync(changes?.password, 10);
     }
     return this.usersRepository.save(user);
   }

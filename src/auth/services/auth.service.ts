@@ -27,6 +27,9 @@ export class AuthService {
         `Las datos de inicio de sesión no coinciden`,
       );
     }
+    if (!user?.isActive) {
+      throw new ForbiddenException(`El usuario se encuentra inactivo`);
+    }
     const token = this.jwtService.sign({
       id: user?.id,
       role: user?.role,
@@ -43,6 +46,9 @@ export class AuthService {
 
   async refresh(userId: string) {
     const user = await this.usersService.findOne(userId);
+    if (!user?.isActive) {
+      throw new ForbiddenException(`El usuario se encuentra inactivo`);
+    }
     const token = this.jwtService.sign({
       id: user?.id,
       role: user?.role,
