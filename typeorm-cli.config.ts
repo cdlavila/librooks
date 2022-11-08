@@ -1,18 +1,18 @@
 import { DataSource } from 'typeorm';
 import * as dotenv from 'dotenv';
+import { join } from 'path';
 
 dotenv.config({ path: '.env' });
 
-export const AppDataSource = new DataSource({
+export default new DataSource({
   type: 'mysql',
   host: process.env.DATABASE_HOST,
   port: parseInt(process.env.DATABASE_PORT, 10),
   database: process.env.DATABASE_NAME,
   username: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
-  synchronize: false,
   logging: true,
-  entities: ['src/**/*.entity.ts'],
-  migrations: ['src/database/migrations/*.ts'],
+  entities: [join(__dirname, '**', '*.entity.{ts,js}')],
+  migrations: [join(__dirname, 'src/database/migrations/', '*.{ts,js}')],
   migrationsTableName: 'migrations',
 });

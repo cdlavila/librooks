@@ -45,7 +45,7 @@ $ npm install
 Run migrations
 
 ```bash
-$ npm run migrations:run
+$ npm run migration:run
 ```
 
 ## Running the app
