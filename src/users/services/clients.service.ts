@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Client } from '../entities/client.entity';
@@ -14,6 +18,12 @@ export class ClientsService {
   ) {}
 
   async create(clientData: CreateClientDto, userData: CreateUserDto) {
+    const user = await this.usersService.exist(userData?.email);
+    if (user) {
+      throw new BadRequestException([
+        `El usuario ${userData?.email} ya existe`,
+      ]);
+    }
     const newUser = await this.usersService.create(userData);
     const newClient = this.clientsRepository.create({
       ...clientData,

@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Admin } from '../entities/admin.entity';
@@ -14,6 +18,12 @@ export class AdminsService {
   ) {}
 
   async create(adminData: CreateAdminDto, userData: CreateUserDto) {
+    const user = await this.usersService.exist(userData?.email);
+    if (user) {
+      throw new BadRequestException([
+        `El correo ${userData?.email} ya está registrado`,
+      ]);
+    }
     const newUser = await this.usersService.create(userData);
     const newAdmin = this.adminsRepository.create({
       ...adminData,

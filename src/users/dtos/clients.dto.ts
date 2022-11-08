@@ -4,10 +4,11 @@ import {
   IsIn,
   IsBoolean,
   IsArray,
-  // IsDate,
-  // MinDate,
-  // MaxDate,
+  IsDate,
+  MinDate,
+  MaxDate,
 } from 'class-validator';
+import { Transform } from 'class-transformer';
 import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateClientDto {
@@ -20,13 +21,14 @@ export class CreateClientDto {
   readonly lastName: string;
 
   @IsNotEmpty({ message: 'La fecha de nacimiento es obligatoria' })
-  // @IsDate({ message: 'La fecha de nacimiento debe ser una fecha válida' })
-  // @MinDate(new Date('1900-01-01'), {
-  //   message: 'La fecha de nacimiento es muy antigua',
-  // })
-  // @MaxDate(new Date(), {
-  //   message: 'La fecha de nacimiento no puede ser mayor a la fecha actual',
-  // })
+  @Transform(({ value }) => new Date(value))
+  @IsDate({ message: 'La fecha de nacimiento debe ser una fecha válida' })
+  @MinDate(new Date('1900-01-01'), {
+    message: 'La fecha de nacimiento es muy antigua',
+  })
+  @MaxDate(new Date('2010-01-01'), {
+    message: 'La fecha de nacimiento no puede ser mayor a la fecha actual',
+  })
   readonly dateOfBirth: Date;
 
   @IsNotEmpty({ message: 'El lugar de nacimiento es obligatorio' })
