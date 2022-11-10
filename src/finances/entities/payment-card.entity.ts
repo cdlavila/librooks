@@ -8,7 +8,7 @@ import {
 import { Client } from '../../users/entities/client.entity';
 
 @Entity({ name: 'payment_cards' })
-export class PaymentCard {
+export class PaymentCardEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

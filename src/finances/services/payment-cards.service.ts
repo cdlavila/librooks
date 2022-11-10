@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PaymentCard } from '../entities/payment-card';
+import { PaymentCardEntity } from '../entities/payment-card.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -10,8 +10,8 @@ import {
 @Injectable()
 export class PaymentCardsService {
   constructor(
-    @InjectRepository(PaymentCard)
-    private paymentCardsRepository: Repository<PaymentCard>,
+    @InjectRepository(PaymentCardEntity)
+    private paymentCardsRepository: Repository<PaymentCardEntity>,
   ) {}
 
   async create(data: CreatePaymentCardDto) {
