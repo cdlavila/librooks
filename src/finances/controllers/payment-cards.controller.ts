@@ -5,7 +5,6 @@ import {
   HttpStatus,
   Post,
   Put,
-  Get,
   Delete,
   Param,
 } from '@nestjs/common';
@@ -26,16 +25,6 @@ export class PaymentCardsController {
       statusCode: HttpStatus.CREATED,
       message: 'Tarjeta de pago creada exitosamente',
       data: await this.paymentCardsService.create(paymentCardPayload),
-    };
-  }
-
-  @Get('/by-client/:clientId')
-  @HttpCode(HttpStatus.OK)
-  async findAllByClient(@Param('clientId') clientId: string) {
-    return {
-      statusCode: HttpStatus.OK,
-      message: `Tarjetas de pago encontradas exitosamente`,
-      data: await this.paymentCardsService.findAllByClient(clientId),
     };
   }
 

@@ -19,11 +19,6 @@ export class PaymentCardsService {
     return this.paymentCardsRepository.save(newCard);
   }
 
-  // Find all payment cards by client
-  async findAllByClient(clientId: string) {
-    return this.paymentCardsRepository.find({ where: { client: clientId } });
-  }
-
   async update(id: string, changes: UpdatePaymentCardDto) {
     const card = await this.paymentCardsRepository.findOne({ where: { id } });
     if (!card) {
