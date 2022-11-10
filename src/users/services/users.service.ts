@@ -11,7 +11,7 @@ export class UsersService {
     @InjectRepository(User) private usersRepository: Repository<User>,
   ) {}
 
-  create(data: CreateUserDto) {
+  async create(data: CreateUserDto) {
     const newUser = this.usersRepository.create(data);
     newUser.password = bcrypt.hashSync(newUser?.password, 10);
     return this.usersRepository.save(newUser);
@@ -44,7 +44,7 @@ export class UsersService {
       where: [{ username }, { email: username }],
       relations: ['admin', 'client'],
     });
-    return user ? true : false;
+    return !!user;
   }
 
   async update(id: string, changes: UpdateUserDto) {

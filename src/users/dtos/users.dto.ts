@@ -6,7 +6,7 @@ import {
   IsEmail,
   IsByteLength,
 } from 'class-validator';
-import { PartialType } from '@nestjs/mapped-types';
+import { PartialType, OmitType } from '@nestjs/mapped-types';
 
 export class CreateUserDto {
   @IsString({ message: 'El nombre de usuario debe ser un texto' })
@@ -35,3 +35,7 @@ export class CreateUserDto {
 }
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {}
+
+export class CreateUserWithoutPasswordDto extends OmitType(CreateUserDto, [
+  'password',
+] as const) {}

@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { AdminsService } from '../services/admins.service';
 import { CreateAdminDto, UpdateAdminDto } from '../dtos/admins.dto';
-import { CreateUserDto, UpdateUserDto } from '../dtos/users.dto';
+import { CreateUserWithoutPasswordDto, UpdateUserDto } from '../dtos/users.dto';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../../auth/guards/roles.guard';
 import { Roles } from '../../auth/decorators/roles.decorator';
@@ -29,7 +29,7 @@ export class AdminsController {
   @Roles(Role.Root)
   async create(
     @Body() adminPayload: CreateAdminDto,
-    @Body('user') userPayload: CreateUserDto,
+    @Body('user') userPayload: CreateUserWithoutPasswordDto,
   ) {
     return {
       statusCode: HttpStatus.CREATED,
