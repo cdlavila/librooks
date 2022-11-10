@@ -6,6 +6,7 @@ import {
   OneToOne,
 } from 'typeorm';
 import { User } from './user.entity';
+import { PaymentCard } from '../../finances/entities/payment-card';
 
 @Entity({ name: 'clients' })
 export class Client {
@@ -87,4 +88,9 @@ export class Client {
   })
   @JoinColumn({ name: 'user_id' })
   user: User;
+
+  @OneToOne(() => PaymentCard, (paymentCard) => paymentCard.client, {
+    nullable: true,
+  })
+  paymentCard: PaymentCard;
 }
