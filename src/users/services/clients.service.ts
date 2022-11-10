@@ -17,7 +17,17 @@ export class ClientsService {
     private usersService: UsersService,
   ) {}
 
+  private calculateAge(dateOfBirth: Date) {
+    const diff = Date.now() - dateOfBirth.getTime();
+    const ageDate = new Date(diff);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+  }
+
   async create(clientData: CreateClientDto, userData: CreateUserDto) {
+    const age = this.calculateAge(clientData.dateOfBirth);
+    if (age < 18) {
+      throw new BadRequestException([`Debes ser mayor de edad`]);
+    }
     const user = await this.usersService.exist(userData?.email);
     if (user) {
       throw new BadRequestException([
@@ -54,7 +64,13 @@ export class ClientsService {
     });
 
     if (!client) {
-      throw new NotFoundException(`Cliente ${id} no encontrado`);
+      throw new NotFoundException([`Cliente ${id} no encontrado`]);
+    }
+    if (clientChanges?.dateOfBirth) {
+      const age = this.calculateAge(clientChanges.dateOfBirth);
+      if (age < 18) {
+        throw new BadRequestException([`Debes ser mayor de edad`]);
+      }
     }
     const user = await this.usersService.update(client?.user?.id, userChanges);
     this.clientsRepository.merge(client, clientChanges);

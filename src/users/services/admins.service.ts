@@ -17,7 +17,19 @@ export class AdminsService {
     private usersService: UsersService,
   ) {}
 
+  private calculateAge(dateOfBirth: Date) {
+    const diff = Date.now() - dateOfBirth.getTime();
+    const ageDate = new Date(diff);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+  }
+
   async create(adminData: CreateAdminDto, userData: CreateUserDto) {
+    const age = this.calculateAge(adminData.dateOfBirth);
+    if (age < 18) {
+      throw new BadRequestException([
+        `El administrador debe ser mayor de edad`,
+      ]);
+    }
     const user = await this.usersService.exist(userData?.email);
     if (user) {
       throw new BadRequestException([
@@ -60,7 +72,15 @@ export class AdminsService {
     });
 
     if (!admin) {
-      throw new NotFoundException(`Administrador ${id} no encontrado`);
+      throw new NotFoundException([`Administrador ${id} no encontrado`]);
+    }
+    if (adminChanges?.dateOfBirth) {
+      const age = this.calculateAge(adminChanges.dateOfBirth);
+      if (age < 18) {
+        throw new BadRequestException([
+          `El administrador debe ser mayor de edad`,
+        ]);
+      }
     }
     const user = await this.usersService.update(admin?.user?.id, userChanges);
     this.adminsRepository.merge(admin, adminChanges);
