@@ -14,7 +14,7 @@ import {
   RequestPasswordResetDto,
   ValidatePasswordResetTokenDto,
   ResetPasswordDto,
-} from '../dtos/password.reset.dto';
+} from '../dtos/password-reset.dto';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 
 @Controller('auth')
