@@ -53,6 +53,17 @@ export class ClientsService {
     return client;
   }
 
+  async findAllPaymentCards(id: string) {
+    const client = await this.clientsRepository.findOne({
+      where: { id },
+      relations: ['paymentCards'],
+    });
+    if (!client) {
+      throw new NotFoundException(`Cliente ${id} no encontrado`);
+    }
+    return client.paymentCards;
+  }
+
   async updateMyself(
     id: string,
     clientChanges: UpdateClientDto,
