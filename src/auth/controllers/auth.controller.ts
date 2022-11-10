@@ -9,12 +9,12 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
-import { LoginDto } from '../dtos/login.dtos';
+import { LoginDto } from '../dtos/login.dto';
 import {
   RequestPasswordResetDto,
   ValidatePasswordResetTokenDto,
   ResetPasswordDto,
-} from '../dtos/password.reset.dtos';
+} from '../dtos/password.reset.dto';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 
 @Controller('auth')

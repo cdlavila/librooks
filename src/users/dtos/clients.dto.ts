@@ -5,52 +5,48 @@ import {
   IsBoolean,
   IsArray,
   IsDate,
-  MinDate,
   MaxDate,
 } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateClientDto {
-  @IsNotEmpty({ message: 'El nombre es obligatorio' })
   @IsString({ message: 'El nombre debe ser un texto' })
+  @IsNotEmpty({ message: 'El nombre es obligatorio' })
   readonly firstName: string;
 
-  @IsNotEmpty({ message: 'El apellido es obligatorio' })
   @IsString({ message: 'El apellido debe ser un texto' })
+  @IsNotEmpty({ message: 'El apellido es obligatorio' })
   readonly lastName: string;
 
-  @IsNotEmpty({ message: 'La fecha de nacimiento es obligatoria' })
-  @Transform(({ value }) => new Date(value))
-  @IsDate({ message: 'La fecha de nacimiento debe ser una fecha válida' })
-  @MinDate(new Date('1900-01-01'), {
-    message: 'La fecha de nacimiento es muy antigua',
-  })
-  @MaxDate(new Date('2010-01-01'), {
+  @MaxDate(new Date(), {
     message: 'La fecha de nacimiento no puede ser mayor a la fecha actual',
   })
+  @IsDate({ message: 'La fecha de nacimiento debe ser una fecha válida' })
+  @Transform(({ value }) => new Date(value))
+  @IsNotEmpty({ message: 'La fecha de nacimiento es obligatoria' })
   readonly dateOfBirth: Date;
 
-  @IsNotEmpty({ message: 'El lugar de nacimiento es obligatorio' })
   @IsString({ message: 'El lugar de nacimiento debe ser un texto' })
+  @IsNotEmpty({ message: 'El lugar de nacimiento es obligatorio' })
   readonly placeOfBirth: string;
 
-  @IsNotEmpty({ message: 'El género es obligatorio' })
   @IsIn(['Masculino', 'Femenino', 'Otro'], {
     message: 'El género no es válido',
   })
+  @IsNotEmpty({ message: 'El género es obligatorio' })
   readonly gender: 'Masculino' | 'Femenino' | 'Otro';
 
-  @IsNotEmpty({ message: 'La dirección es obligatoria' })
   @IsString({ message: 'La dirección debe ser un texto' })
+  @IsNotEmpty({ message: 'La dirección es obligatoria' })
   readonly address: string;
 
-  @IsNotEmpty({ message: 'El suscrito a noticias es obligatorio' })
   @IsBoolean({ message: 'El suscrito a noticias debe ser un booleano' })
+  @IsNotEmpty({ message: 'El suscrito a noticias es obligatorio' })
   readonly newsSubscriber: boolean;
 
-  @IsNotEmpty({ message: 'Las preferencias son obligatorias' })
   @IsArray({ message: 'Las preferencias deben ser un array' })
+  @IsNotEmpty({ message: 'Las preferencias son obligatorias' })
   readonly preferences: Array<string>;
 }
 

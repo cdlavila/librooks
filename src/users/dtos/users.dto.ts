@@ -9,28 +9,28 @@ import {
 import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateUserDto {
-  @IsNotEmpty({ message: 'El nombre de usuario es obligatorio' })
   @IsString({ message: 'El nombre de usuario debe ser un texto' })
+  @IsNotEmpty({ message: 'El nombre de usuario es obligatorio' })
   readonly username: string;
 
-  @IsNotEmpty({ message: 'El correo electrónico es obligatorio' })
   @IsEmail({}, { message: 'El correo electrónico no tiene un formato válido' })
+  @IsNotEmpty({ message: 'El correo electrónico es obligatorio' })
   readonly email: string;
 
-  @IsNotEmpty({ message: 'La contraseña es obligatoria' })
   @IsByteLength(8, 32, {
     message: 'La contraseña debe tener entre 8 y 32 caracteres',
   })
+  @IsNotEmpty({ message: 'La contraseña es obligatoria' })
   readonly password: string;
 
-  @IsNotEmpty({ message: 'El rol es obligatorio' })
   @IsIn(['root', 'admin', 'client'], {
     message: 'El rol no es válido',
   })
+  @IsNotEmpty({ message: 'El rol es obligatorio' })
   readonly role: 'root' | 'admin' | 'client';
 
-  @IsNotEmpty({ message: 'El esta activo es obligatorio' })
   @IsBoolean({ message: 'El esta activo debe ser un booleano' })
+  @IsNotEmpty({ message: 'El esta activo es obligatorio' })
   readonly isActive: boolean;
 }
 
