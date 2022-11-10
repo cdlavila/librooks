@@ -4,6 +4,7 @@ import {
   Column,
   JoinColumn,
   OneToOne,
+  OneToMany,
 } from 'typeorm';
 import { User } from './user.entity';
 import { PaymentCard } from '../../finances/entities/payment-card';
@@ -89,8 +90,6 @@ export class Client {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @OneToOne(() => PaymentCard, (paymentCard) => paymentCard.client, {
-    nullable: true,
-  })
-  paymentCard: PaymentCard;
+  @OneToMany(() => PaymentCard, (paymentCard) => paymentCard.client)
+  paymentCards: Array<PaymentCard>;
 }

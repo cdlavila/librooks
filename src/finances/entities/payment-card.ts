@@ -47,7 +47,7 @@ export class PaymentCard {
   })
   cvc: string;
 
-  @OneToOne(() => Client, (client) => client.paymentCard, {
+  @OneToOne(() => Client, (client) => client.paymentCards, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
