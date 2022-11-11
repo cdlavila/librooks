@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -42,6 +43,16 @@ export class WalletsController {
       statusCode: HttpStatus.OK,
       message: `Billetera ${req?.wallet?.id} actualizada exitosamente`,
       data: await this.walletsService.update(req?.wallet?.id, changes),
+    };
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.OK)
+  async delete(@Req() req: any) {
+    return {
+      statusCode: HttpStatus.OK,
+      message: `Billetera ${req?.wallet?.id} eliminada exitosamente`,
+      data: await this.walletsService.delete(req?.wallet?.id),
     };
   }
 }

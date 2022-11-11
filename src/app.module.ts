@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { JwtStrategy } from './auth/strategies/jwt.strategy';
 import { MailModule } from './mail/mail.module';
 import { FinancesModule } from './finances/finances.module';
+import { NewsModule } from './news/news.module';
 import databaseConfig from './config/database.config';
 import authConfig from './config/auth.config';
 
@@ -26,6 +27,7 @@ import authConfig from './config/auth.config';
     UsersModule,
     AuthModule,
     FinancesModule,
+    NewsModule,
   ],
   controllers: [AppController],
   providers: [AppService, JwtStrategy],

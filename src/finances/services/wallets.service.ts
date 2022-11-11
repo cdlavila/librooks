@@ -34,4 +34,8 @@ export class WalletsService {
     this.WalletRepository.merge(wallet, changes);
     return this.WalletRepository.save(wallet);
   }
+
+  async delete(id: string) {
+    return await this.WalletRepository.delete(id);
+  }
 }
