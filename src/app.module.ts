@@ -8,8 +8,7 @@ import { AppEnvironment } from './app.environment';
 import { AuthModule } from './auth/auth.module';
 import { JwtStrategy } from './auth/strategies/jwt.strategy';
 import { MailModule } from './mail/mail.module';
-import { WalletsService } from './finances/services/wallets.service';
-import { WalletsController } from './finances/controllers/wallets.controller';
+import { FinancesModule } from './finances/finances.module';
 import databaseConfig from './config/database.config';
 import authConfig from './config/auth.config';
 
@@ -26,8 +25,9 @@ import authConfig from './config/auth.config';
     MailModule,
     UsersModule,
     AuthModule,
+    FinancesModule,
   ],
-  controllers: [AppController, WalletsController],
-  providers: [AppService, JwtStrategy, WalletsService],
+  controllers: [AppController],
+  providers: [AppService, JwtStrategy],
 })
 export class AppModule {}

@@ -4,9 +4,11 @@ import {
   Column,
   JoinColumn,
   OneToOne,
+  OneToMany,
 } from 'typeorm';
 import { User } from './user.entity';
 import { Wallet } from '../../finances/entities/wallet.entity';
+import { PaymentCard } from '../../finances/entities/payment-card.entity';
 
 @Entity({ name: 'clients' })
 export class Client {
@@ -93,4 +95,7 @@ export class Client {
     nullable: true,
   })
   wallet: Wallet;
+
+  @OneToMany(() => PaymentCard, (paymentCard) => paymentCard.client)
+  paymentCards: Array<PaymentCard>;
 }
