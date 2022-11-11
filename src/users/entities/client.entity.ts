@@ -7,7 +7,8 @@ import {
   OneToMany,
 } from 'typeorm';
 import { User } from './user.entity';
-import { PaymentCardEntity } from '../../finances/entities/payment-card.entity';
+import { Wallet } from '../../finances/entities/wallet.entity';
+import { PaymentCard } from '../../finances/entities/payment-card.entity';
 
 @Entity({ name: 'clients' })
 export class Client {
@@ -90,6 +91,11 @@ export class Client {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @OneToMany(() => PaymentCardEntity, (paymentCard) => paymentCard.client)
-  paymentCards: Array<PaymentCardEntity>;
+  @OneToOne(() => Wallet, (wallet) => wallet.client, {
+    nullable: true,
+  })
+  wallet: Wallet;
+
+  @OneToMany(() => PaymentCard, (paymentCard) => paymentCard.client)
+  paymentCards: Array<PaymentCard>;
 }
