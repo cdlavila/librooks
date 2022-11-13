@@ -9,9 +9,14 @@ import { AdminsController } from './controllers/admins.controller';
 import { ClientsService } from './services/clients.service';
 import { ClientsController } from './controllers/clients.controller';
 import { MailModule } from '../mail/mail.module';
+import { FinancesModule } from '../finances/finances.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Admin, Client]), MailModule],
+  imports: [
+    TypeOrmModule.forFeature([User, Admin, Client]),
+    MailModule,
+    FinancesModule,
+  ],
   controllers: [AdminsController, ClientsController],
   providers: [AdminsService, UsersService, ClientsService],
   exports: [UsersService],

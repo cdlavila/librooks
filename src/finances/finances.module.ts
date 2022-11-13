@@ -11,5 +11,6 @@ import { Wallet } from './entities/wallet.entity';
   imports: [TypeOrmModule.forFeature([PaymentCard, Wallet])],
   controllers: [PaymentCardsController, WalletsController],
   providers: [PaymentCardsService, WalletsService],
+  exports: [WalletsService],
 })
 export class FinancesModule {}
