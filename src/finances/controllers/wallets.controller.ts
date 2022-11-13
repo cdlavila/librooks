@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Get,
   HttpCode,
   HttpStatus,
   Post,
@@ -20,18 +19,8 @@ export class WalletsController {
   async create(@Body() walletPayload: CreateWalletDto) {
     return {
       statusCode: HttpStatus.CREATED,
-      message: 'Administrador creado exitosamente',
+      message: 'Billetera creada exitosamente',
       data: await this.walletsService.create(walletPayload),
-    };
-  }
-
-  @Get(':id')
-  @HttpCode(HttpStatus.OK)
-  async find(@Req() req: any) {
-    return {
-      statusCode: HttpStatus.OK,
-      message: `Billetera ${req?.wallet?.id} encontrada exitosamente`,
-      data: await this.walletsService.findOne(req?.wallet?.id),
     };
   }
 
@@ -40,8 +29,8 @@ export class WalletsController {
   async update(@Req() req: any, @Body() changes: any) {
     return {
       statusCode: HttpStatus.OK,
-      message: `Billetera ${req?.wallet?.id} actualizada exitosamente`,
-      data: await this.walletsService.update(req?.wallet?.id, changes),
+      message: `Billetera ${req?.params?.id} actualizada exitosamente`,
+      data: await this.walletsService.update(req?.params?.id, changes),
     };
   }
 }

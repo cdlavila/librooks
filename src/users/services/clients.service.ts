@@ -53,6 +53,17 @@ export class ClientsService {
     return client;
   }
 
+  async findMyWallet(id: string) {
+    const client = await this.clientsRepository.findOne({
+      where: { id },
+      relations: ['wallet'],
+    });
+    if (!client) {
+      throw new NotFoundException(`Cliente ${id} no encontrado`);
+    }
+    return client.wallet;
+  }
+
   async findAllPaymentCards(id: string) {
     const client = await this.clientsRepository.findOne({
       where: { id },

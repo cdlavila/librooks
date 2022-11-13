@@ -47,6 +47,22 @@ export class ClientsController {
     };
   }
 
+  @Get('wallet')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Client)
+  async findMyWallet(@Req() req: any) {
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'Billetera encontrada exitosamente',
+      data: await this.clientsService.findMyWallet(req?.user?.client?.id),
+    };
+  }
+
+  @Get('payment-cards')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Client)
   async findAllPaymentCards(@Req() req: any) {
     return {
       statusCode: HttpStatus.OK,
