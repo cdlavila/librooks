@@ -4,7 +4,7 @@ import * as bcrypt from 'bcrypt';
 
 dotenv.config({ path: '.env' });
 
-export class createRoot1668061490722 implements MigrationInterface {
+export class seedRoot1668061490722 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.manager.insert('users', {
       id: '8d4169b9-673b-4819-8097-376548c51a15',

@@ -15,8 +15,8 @@ export class PaymentCardsService {
   ) {}
 
   async create(data: CreatePaymentCardDto) {
-    const newCard = this.paymentCardsRepository.create(data);
-    return this.paymentCardsRepository.save(newCard);
+    const newPaymentCard = this.paymentCardsRepository.create(data);
+    return this.paymentCardsRepository.save(newPaymentCard);
   }
 
   async update(id: string, changes: UpdatePaymentCardDto) {
