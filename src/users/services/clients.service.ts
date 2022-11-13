@@ -68,7 +68,7 @@ export class ClientsService {
     return client.wallet;
   }
 
-  async findAllPaymentCards(id: string) {
+  async findMyPaymentCards(id: string) {
     const client = await this.clientsRepository.findOne({
       where: { id },
       relations: ['paymentCards'],

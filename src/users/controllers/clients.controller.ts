@@ -63,13 +63,11 @@ export class ClientsController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Client)
-  async findAllPaymentCards(@Req() req: any) {
+  async findMyPaymentCards(@Req() req: any) {
     return {
       statusCode: HttpStatus.OK,
       message: 'Tarjetas de pago encontradas exitosamente',
-      data: await this.clientsService.findAllPaymentCards(
-        req?.user?.client?.id,
-      ),
+      data: await this.clientsService.findMyPaymentCards(req?.user?.client?.id),
     };
   }
 
