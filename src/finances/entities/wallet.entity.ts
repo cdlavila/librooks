@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { Client } from '../../users/entities/client.entity';
 
-@Entity({ name: 'admins' })
+@Entity({ name: 'wallets' })
 export class Wallet {
   @PrimaryGeneratedColumn('uuid')
   id: string;
