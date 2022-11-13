@@ -31,4 +31,8 @@ export class WalletsService {
     }
     return this.WalletRepository.delete(id);
   }
+
+  async delete(id: string) {
+    return await this.WalletRepository.delete(id);
+  }
 }

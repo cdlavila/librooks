@@ -41,4 +41,14 @@ export class WalletsController {
       data: await this.walletsService.update(req?.params?.id, changes),
     };
   }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.OK)
+  async delete(@Req() req: any) {
+    return {
+      statusCode: HttpStatus.OK,
+      message: `Billetera ${req?.wallet?.id} eliminada exitosamente`,
+      data: await this.walletsService.delete(req?.wallet?.id),
+    };
+  }
 }
