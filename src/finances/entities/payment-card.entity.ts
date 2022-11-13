@@ -3,7 +3,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   JoinColumn,
-  OneToOne,
+  ManyToOne,
 } from 'typeorm';
 import { Client } from '../../users/entities/client.entity';
 
@@ -47,7 +47,7 @@ export class PaymentCard {
   })
   cvc: string;
 
-  @OneToOne(() => Client, (client) => client.paymentCards, {
+  @ManyToOne(() => Client, (client) => client.paymentCards, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })

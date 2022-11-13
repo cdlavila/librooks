@@ -9,12 +9,14 @@ import { Client } from '../entities/client.entity';
 import { CreateClientDto, UpdateClientDto } from '../dtos/clients.dto';
 import { CreateUserDto, UpdateUserDto } from '../dtos/users.dto';
 import { UsersService } from './users.service';
+import { WalletsService } from '../../finances/services/wallets.service';
 
 @Injectable()
 export class ClientsService {
   constructor(
     @InjectRepository(Client) private clientsRepository: Repository<Client>,
     private usersService: UsersService,
+    private walletsService: WalletsService,
   ) {}
 
   private calculateAge(dateOfBirth: Date) {
@@ -39,7 +41,9 @@ export class ClientsService {
       ...clientData,
       user: newUser,
     });
-    return this.clientsRepository.save(newClient);
+    const savedClient = await this.clientsRepository.save(newClient);
+    await this.walletsService.create({ balance: 0, client: newClient });
+    return savedClient;
   }
 
   async findMyself(id: string) {
@@ -53,7 +57,18 @@ export class ClientsService {
     return client;
   }
 
-  async findAllPaymentCards(id: string) {
+  async findMyWallet(id: string) {
+    const client = await this.clientsRepository.findOne({
+      where: { id },
+      relations: ['wallet'],
+    });
+    if (!client) {
+      throw new NotFoundException(`Cliente ${id} no encontrado`);
+    }
+    return client.wallet;
+  }
+
+  async findMyPaymentCards(id: string) {
     const client = await this.clientsRepository.findOne({
       where: { id },
       relations: ['paymentCards'],
