@@ -14,7 +14,7 @@ export class Stock {
   id: string;
 
   @Column({
-    type: 'number',
+    type: 'integer',
     nullable: false,
     name: 'quantity',
   })

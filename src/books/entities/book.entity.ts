@@ -59,7 +59,7 @@ export class Book {
   genre: string;
 
   @Column({
-    type: 'number',
+    type: 'integer',
     nullable: false,
     name: 'pages_number',
   })
@@ -94,7 +94,7 @@ export class Book {
   isExhausted: boolean;
 
   @Column({
-    type: 'number',
+    type: 'float',
     nullable: false,
     name: 'price',
   })
