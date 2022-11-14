@@ -25,7 +25,7 @@ export class BooksService {
       where: { id },
     });
     if (!book) {
-      throw new NotFoundException({ message: `Libro ${id} no encontrado` });
+      throw new NotFoundException(`Libro ${id} no encontrado`);
     }
     return book;
   }

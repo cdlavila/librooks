@@ -55,7 +55,7 @@ export class CreateBookDto {
   @IsNotEmpty({ message: 'El campo editorial es obligatorio' })
   readonly editorial: string;
 
-  @IsUrl({ message: 'El campo foto debe ser una url válida' })
+  @IsUrl({}, { message: 'El campo foto debe ser una url válida' })
   @IsNotEmpty({ message: 'El campo foto es obligatorio' })
   readonly photo: string;
 
