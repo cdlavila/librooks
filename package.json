@@ -24,7 +24,12 @@
     "migration:generate": "npm run build && npx typeorm migration:generate src/database/migrations/$npm_config_name -d dist/typeorm-cli.config",
     "migration:show": "npm run build && npx typeorm migration:show -d dist/typeorm-cli.config",
     "migration:run": "npm run build && npx typeorm migration:run -d dist/typeorm-cli.config",
-    "migration:revert": "npm run build && npx typeorm migration:revert -d dist/typeorm-cli.config"
+    "migration:revert": "npm run build && npx typeorm migration:revert -d dist/typeorm-cli.config",
+    "module:create": "nest g module $npm_config_name",
+    "entity:create": "typeorm entity:create src/$npm_config_module/entities/$npm_config_name",
+    "dto:create": "nest g class $npm_config_module/dtos/$npm_config_name --no-spec --flat",
+    "service:create": "nest g service $npm_config_name $npm_config_module/services --flat",
+    "controller:create": "nest g controller $npm_config_name $npm_config_module/controllers --flat"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.8.1",
