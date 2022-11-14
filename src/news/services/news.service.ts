@@ -15,6 +15,10 @@ export class NewsService {
     return this.newsRepository.save(newNews);
   }
 
+  async findAll() {
+    return this.newsRepository.find();
+  }
+
   async update(id: string, changes: UpdateNewsDto) {
     const news = await this.newsRepository.findOne({ where: { id } });
     if (!news) {
@@ -30,9 +34,5 @@ export class NewsService {
       throw new NotFoundException(`Noticia ${id} no encontrada`);
     }
     return this.newsRepository.delete(id);
-  }
-
-  async findAll() {
-    return this.newsRepository.find();
   }
 }
