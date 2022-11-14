@@ -90,6 +90,7 @@ export class Book {
   @Column({
     type: 'boolean',
     nullable: false,
+    default: false,
     name: 'is_exhausted',
   })
   isExhausted: boolean;

@@ -9,7 +9,7 @@ export class seedRoot1668061490722 implements MigrationInterface {
     await queryRunner.manager.insert('users', {
       id: '8d4169b9-673b-4819-8097-376548c51a15',
       username: 'root',
-      email: 'carlosdaniel.londono@utp.edu.co',
+      email: 'root@librooks.com',
       password: bcrypt.hashSync(process.env.ROOT_PASSWORD, 10),
       role: 'root',
       is_active: 1,

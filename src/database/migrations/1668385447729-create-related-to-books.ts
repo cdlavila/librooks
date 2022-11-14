@@ -14,7 +14,7 @@ export class createRelatedToBooks1668385447729 implements MigrationInterface {
       `CREATE TABLE \`news\` (\`id\` varchar(36) NOT NULL, \`date\` date NOT NULL, \`description\` varchar(255) NOT NULL, \`book_id\` varchar(36) NULL, UNIQUE INDEX \`REL_b3ee1fbbe51c16ab4f3d079ca1\` (\`book_id\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
     );
     await queryRunner.query(
-      `CREATE TABLE \`books\` (\`id\` varchar(36) NOT NULL, \`title\` varchar(255) NOT NULL, \`author\` varchar(255) NOT NULL, \`status\` enum ('Nuevo', 'Usado') NOT NULL DEFAULT 'Nuevo', \`publication_date\` date NOT NULL, \`issn\` varchar(255) NOT NULL, \`genre\` varchar(255) NOT NULL, \`pages_number\` int NOT NULL, \`language\` varchar(255) NOT NULL, \`editorial\` varchar(255) NOT NULL, \`photo\` varchar(255) NOT NULL, \`is_exhausted\` tinyint NOT NULL, \`price\` float NOT NULL, UNIQUE INDEX \`IDX_3cd818eaf734a9d8814843f119\` (\`title\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
+      `CREATE TABLE \`books\` (\`id\` varchar(36) NOT NULL, \`title\` varchar(255) NOT NULL, \`author\` varchar(255) NOT NULL, \`status\` enum ('Nuevo', 'Usado') NOT NULL DEFAULT 'Nuevo', \`publication_date\` date NOT NULL, \`issn\` varchar(255) NOT NULL, \`genre\` varchar(255) NOT NULL, \`pages_number\` int NOT NULL, \`language\` varchar(255) NOT NULL, \`editorial\` varchar(255) NOT NULL, \`photo\` varchar(255) NOT NULL, \`is_exhausted\` tinyint NOT NULL DEFAULT 0, \`price\` float NOT NULL, UNIQUE INDEX \`IDX_3cd818eaf734a9d8814843f119\` (\`title\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
     );
     await queryRunner.query(
       `ALTER TABLE \`stocks\` ADD CONSTRAINT \`FK_1a5034b787301c2493eed57fe0f\` FOREIGN KEY (\`book_id\`) REFERENCES \`books\`(\`id\`) ON DELETE CASCADE ON UPDATE CASCADE`,
