@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { Stock } from './stock.entity';
 import { News } from '../../news/entities/news.entity';
+import { BookingBook } from '../../bookings/entities/booking-book.entity';
 
 @Entity({ name: 'books' })
 export class Book {
@@ -105,4 +106,7 @@ export class Book {
 
   @OneToOne(() => News, (news) => news.book)
   news: News;
+
+  @OneToMany(() => BookingBook, (bookingBook) => bookingBook.book)
+  bookingsBooks: Array<BookingBook>;
 }
