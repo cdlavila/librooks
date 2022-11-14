@@ -4,14 +4,17 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Client } from '../../users/entities/client.entity';
 import { Store } from '../../books/entities/store.entity';
-import { BookingBook } from './booking-book.entity';
+import { PurchaseBook } from './purchase-book.entity';
+import { Shipment } from './shipment.entity';
+import { Return } from './return.entity';
 
-@Entity({ name: 'bookings' })
-export class Booking {
+@Entity({ name: 'purchases' })
+export class Purchase {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -43,20 +46,39 @@ export class Booking {
   })
   total: number;
 
-  @ManyToOne(() => Client, (client) => client.bookings, {
+  @Column({
+    type: 'enum',
+    enum: ['Recogida en tienda', 'Envío a domicilio'],
+    default: 'Envío a domicilio',
+    nullable: false,
+    name: 'delivery_method',
+  })
+  deliveryMethod: 'Recogida en tienda' | 'Envío a domicilio';
+
+  @ManyToOne(() => Client, (client) => client.purchases, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'client_id' })
   client: Client;
 
-  @ManyToOne(() => Store, (store) => store.bookings, {
+  @ManyToOne(() => Store, (store) => store.purchases, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'store_id' })
   store: Store;
 
-  @OneToMany(() => BookingBook, (bookingBook) => bookingBook.booking)
-  bookingsBooks: Array<BookingBook>;
+  @OneToMany(() => PurchaseBook, (purchaseBook) => purchaseBook.purchase)
+  purchasesBooks: Array<PurchaseBook>;
+
+  @OneToOne(() => Shipment, (shipment) => shipment.purchase, {
+    nullable: true,
+  })
+  shipment: Shipment;
+
+  @OneToOne(() => Return, (r) => r.purchase, {
+    nullable: true,
+  })
+  return: Return;
 }

@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Stock } from './stock.entity';
 import { Booking } from '../../bookings/entities/booking.entity';
+import { Purchase } from '../../purchases/entities/purchase.entity';
 
 @Entity({ name: 'stores' })
 export class Store {
@@ -41,4 +42,7 @@ export class Store {
 
   @OneToMany(() => Booking, (booking) => booking.store)
   bookings: Array<Booking>;
+
+  @OneToMany(() => Purchase, (purchase) => purchase.store)
+  purchases: Array<Purchase>;
 }

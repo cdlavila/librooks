@@ -11,6 +11,8 @@ import { MailModule } from './mail/mail.module';
 import { FinancesModule } from './finances/finances.module';
 import { NewsModule } from './news/news.module';
 import { BooksModule } from './books/books.module';
+import { PurchasesModule } from './purchases/purchases.module';
+import { BookingsModule } from './bookings/bookings.module';
 import databaseConfig from './config/database.config';
 import authConfig from './config/auth.config';
 
@@ -30,6 +32,8 @@ import authConfig from './config/auth.config';
     FinancesModule,
     NewsModule,
     BooksModule,
+    PurchasesModule,
+    BookingsModule,
   ],
   controllers: [AppController],
   providers: [AppService, JwtStrategy],
