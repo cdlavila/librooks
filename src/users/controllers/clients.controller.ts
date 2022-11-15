@@ -95,6 +95,20 @@ export class ClientsController {
     };
   }
 
+  @Get('returns')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Client)
+  async findMyPurchasesWithReturns(@Req() req: any) {
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'Compras con devoluciones encontradas exitosamente',
+      data: await this.clientsService.findMyPurchasesWithReturns(
+        req?.user?.client?.id,
+      ),
+    };
+  }
+
   @Put('myself')
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard, RolesGuard)

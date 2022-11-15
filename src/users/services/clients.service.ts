@@ -101,6 +101,17 @@ export class ClientsService {
     return client.bookings;
   }
 
+  async findMyPurchasesWithReturns(id: string) {
+    const client = await this.clientsRepository.findOne({
+      where: { id },
+      relations: ['purchases', 'purchases.return'],
+    });
+    if (!client) {
+      throw new NotFoundException(`Cliente ${id} no encontrado`);
+    }
+    return client.purchases;
+  }
+
   async updateMyself(
     id: string,
     clientChanges: UpdateClientDto,
