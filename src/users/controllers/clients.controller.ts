@@ -71,6 +71,18 @@ export class ClientsController {
     };
   }
 
+  @Get('purchases')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Client)
+  async findMyPurchases(@Req() req: any) {
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'Compras encontradas exitosamente',
+      data: await this.clientsService.findMyPurchases(req?.user?.client?.id),
+    };
+  }
+
   @Put('myself')
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard, RolesGuard)
