@@ -22,7 +22,7 @@ export class BookingsService {
       where: { id },
     });
     if (!booking) {
-      throw new NotFoundException(`Booking ${id} not found`);
+      throw new NotFoundException(`Reserva ${id} no encontrada`);
     }
     this.bookingRepository.merge(booking, changes);
     return this.bookingRepository.save(booking);
