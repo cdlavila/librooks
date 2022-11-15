@@ -9,6 +9,8 @@ import {
 import { User } from './user.entity';
 import { Wallet } from '../../finances/entities/wallet.entity';
 import { PaymentCard } from '../../finances/entities/payment-card.entity';
+import { Booking } from '../../bookings/entities/booking.entity';
+import { Purchase } from '../../purchases/entities/purchase.entity';
 
 @Entity({ name: 'clients' })
 export class Client {
@@ -98,4 +100,10 @@ export class Client {
 
   @OneToMany(() => PaymentCard, (paymentCard) => paymentCard.client)
   paymentCards: Array<PaymentCard>;
+
+  @OneToMany(() => Booking, (booking) => booking.client)
+  bookings: Array<Booking>;
+
+  @OneToMany(() => Purchase, (purchase) => purchase.client)
+  purchases: Array<Purchase>;
 }
