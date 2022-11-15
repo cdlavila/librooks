@@ -90,6 +90,17 @@ export class ClientsService {
     return client.purchases;
   }
 
+  async findMyBookings(id: string) {
+    const client = await this.clientsRepository.findOne({
+      where: { id },
+      relations: ['bookings'],
+    });
+    if (!client) {
+      throw new NotFoundException(`Cliente ${id} no encontrado`);
+    }
+    return client.bookings;
+  }
+
   async updateMyself(
     id: string,
     clientChanges: UpdateClientDto,

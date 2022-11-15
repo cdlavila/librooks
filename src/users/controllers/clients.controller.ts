@@ -83,6 +83,18 @@ export class ClientsController {
     };
   }
 
+  @Get('bookings')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Client)
+  async findMyBookings(@Req() req: any) {
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'Reservas encontradas exitosamente',
+      data: await this.clientsService.findMyBookings(req?.user?.client?.id),
+    };
+  }
+
   @Put('myself')
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard, RolesGuard)
