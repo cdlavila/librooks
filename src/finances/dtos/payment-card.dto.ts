@@ -1,13 +1,11 @@
 import {
   IsString,
   IsNumberString,
-  IsDate,
   IsNotEmpty,
   IsByteLength,
   IsUUID,
 } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
-import { Transform } from 'class-transformer';
 import { Client } from '../../users/entities/client.entity';
 
 export class CreatePaymentCardDto {
@@ -22,10 +20,9 @@ export class CreatePaymentCardDto {
   @IsNotEmpty({ message: 'El número es requerido' })
   readonly number: string;
 
-  @IsDate({ message: 'La fecha de expiración debe ser una fecha' })
-  @Transform(({ value }) => new Date(value))
+  @IsString({ message: 'La fecha de expiración debe ser de tipo texto' })
   @IsNotEmpty({ message: 'La fecha de expiración es requerida' })
-  readonly expirationDate: Date;
+  readonly expirationDate: string;
 
   @IsByteLength(3, 3, {
     message: 'El código de seguridad debe tener 3 caracteres',

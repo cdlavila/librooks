@@ -31,12 +31,12 @@ export class PaymentCard {
   number: string;
 
   @Column({
-    type: 'date',
+    type: 'varchar',
     nullable: false,
     unique: false,
     name: 'expiration_date',
   })
-  expirationDate: Date;
+  expirationDate: string;
 
   @Column({
     type: 'varchar',
