@@ -8,12 +8,14 @@ import { PurchasesController } from './controllers/purchases.controller';
 import { PurchasesService } from './services/purchases.service';
 import { ReturnsService } from './services/returns.service';
 import { ReturnsController } from './controllers/returns.controller';
+import { ShipmentsService } from './services/shipments.service';
+import { ShipmentsController } from './controllers/shipments.controller';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Purchase, PurchaseBook, Return, Shipment]),
   ],
-  controllers: [PurchasesController, ReturnsController],
-  providers: [PurchasesService, ReturnsService],
+  controllers: [PurchasesController, ReturnsController, ShipmentsController],
+  providers: [PurchasesService, ReturnsService, ShipmentsService],
 })
 export class PurchasesModule {}
