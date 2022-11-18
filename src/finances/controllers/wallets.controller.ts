@@ -34,7 +34,7 @@ export class WalletsController {
   @Put(':id')
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.Admin)
+  @Roles(Role.Admin, Role.Client)
   async update(@Req() req: any, @Body() changes: any) {
     return {
       statusCode: HttpStatus.OK,
