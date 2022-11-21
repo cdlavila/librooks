@@ -4,7 +4,6 @@ import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AppEnvironment } from './app.environment';
 import { AuthModule } from './auth/auth.module';
 import { JwtStrategy } from './auth/strategies/jwt.strategy';
 import { MailModule } from './mail/mail.module';
@@ -19,7 +18,7 @@ import authConfig from './config/auth.config';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: AppEnvironment[process.env.NODE_ENV] || '.env',
+      envFilePath: '.env',
       load: [databaseConfig, authConfig],
       isGlobal: true,
       cache: true,
