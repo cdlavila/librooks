@@ -48,7 +48,7 @@ Run migrations
 $ npm run migration:run
 ```
 
-## Running the app
+## Running and testing the app
 
 ```bash
 # development
@@ -73,3 +73,11 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
+#### Step 6
+Check server is running, by clicking on the link that appears in the terminal
+
+#### Step 7
+Testing endpoints in Postman
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://documenter.getpostman.com/view/14110882/2s83zjtPkd)
