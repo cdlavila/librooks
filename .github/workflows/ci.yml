@@ -35,57 +35,49 @@ jobs:
         run: npm ci
       - name: Run unit tests
         run: npm run test
-#  e2e-tests:
-#    runs-on: ubuntu-latest
-#    container:
-#      image: node:18
-#    services:
-#      postgres-test:
-#        image: postgres:latest
-#        env:
-#          POSTGRES_USER: ${{secrets.DATABASE_USER_TEST}}
-#          POSTGRES_PASSWORD: ${{secrets.DATABASE_PASSWORD_TEST}}
-#          POSTGRES_DB: ${{secrets.DATABASE_NAME_TEST}}
-#        ports:
-#          - 5432:5432
-#        # Set health checks to wait until postgres has started
-#        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-#      redis-test:
-#        image: redis:latest
-#        ports:
-#          - 6379:6379
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v2
-#      - name: Install dependencies
-#        run: npm ci
-#      - name: Run migrations
-#        run: npm run db:migrate:test
-#        env:
-#          NODE_ENV: ${{secrets.NODE_ENV}}
-#          PORT: ${{secrets.PORT}}
-#          DATABASE_HOST_TEST: ${{secrets.DATABASE_HOST_TEST}}
-#          DATABASE_PORT_TEST: ${{secrets.DATABASE_PORT_TEST}}
-#          DATABASE_USER_TEST: ${{secrets.DATABASE_USER_TEST}}
-#          DATABASE_PASSWORD_TEST: ${{secrets.DATABASE_PASSWORD_TEST}}
-#          DATABASE_NAME_TEST: ${{secrets.DATABASE_NAME_TEST}}
-#      - name: Run e2e tests
-#        run: npm run test:e2e
-#        env:
-#          NODE_ENV: ${{secrets.NODE_ENV}}
-#          PORT: ${{secrets.PORT}}
-#          DATABASE_HOST_TEST: ${{secrets.DATABASE_HOST_TEST}}
-#          DATABASE_PORT_TEST: ${{secrets.DATABASE_PORT_TEST}}
-#          DATABASE_USER_TEST: ${{secrets.DATABASE_USER_TEST}}
-#          DATABASE_PASSWORD_TEST: ${{secrets.DATABASE_PASSWORD_TEST}}
-#          DATABASE_NAME_TEST: ${{secrets.DATABASE_NAME_TEST}}
-#          EMAIL: ${{secrets.EMAIL}}
-#          EMAIL_PASSWORD: ${{secrets.EMAIL_PASSWORD}}
-#          REDIS_HOST: ${{secrets.REDIS_HOST}}
-#          REDIS_PORT: ${{secrets.REDIS_PORT}}
-#          TWILIO_ACCOUNT_SID: ${{secrets.TWILIO_ACCOUNT_SID}}
-#          TWILIO_AUTH_TOKEN: ${{secrets.TWILIO_AUTH_TOKEN}}
-#          TWILIO_MESSAGING_SERVICE_SID: ${{secrets.TWILIO_MESSAGING_SERVICE_SID}}
-#          TWILIO_WHATSAPP: ${{secrets.TWILIO_WHATSAPP}}
-#          TOKEN_SECRET_KEY: ${{secrets.TOKEN_SECRET_KEY}}
-#          SERVER_URL: ${{secrets.SERVER_URL}}
+  e2e-tests:
+    runs-on: ubuntu-latest
+    container:
+      image: node:18
+    services:
+      mysqldb-test:
+        image: mysql:latest
+        env:
+          MYSQL_ROOT_HOST: '%'
+          MYSQL_ROOT_PASSWORD: ${{secrets.DATABASE_ROOT_PASSWORD_TEST}}
+          MYSQL_DATABASE: ${{secrets.DATABASE_NAME_TEST}}
+          MYSQL_USER: ${{secrets.DATABASE_USER_TEST}}
+          MYSQL_PASSWORD: ${{secrets.DATABASE_PASSWORD_TEST}}
+        ports:
+          - 3306:3306
+        # Set health checks to wait until mysql has started
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm ci
+      - name: Run migrations
+        run: npm run migration:run
+        env:
+          DATABASE_HOST_TEST: ${{secrets.DATABASE_HOST_TEST}}
+          DATABASE_PORT_TEST: ${{secrets.DATABASE_PORT_TEST}}
+          DATABASE_NAME_TEST: ${{secrets.DATABASE_NAME_TEST}}
+          DATABASE_USER_TEST: ${{secrets.DATABASE_USER_TEST}}
+          DATABASE_PASSWORD_TEST: ${{secrets.DATABASE_PASSWORD_TEST}}
+          DATABASE_ROOT_PASSWORD_TEST: ${{secrets.DATABASE_ROOT_PASSWORD_TEST}}
+      - name: Run e2e tests
+        run: npm run test:e2e
+        env:
+          NODE_ENV: ${{secrets.NODE_ENV}}
+          PORT: ${{secrets.PORT}}
+          DATABASE_HOST_TEST: ${{secrets.DATABASE_HOST_TEST}}
+          DATABASE_PORT_TEST: ${{secrets.DATABASE_PORT_TEST}}
+          DATABASE_NAME_TEST: ${{secrets.DATABASE_NAME_TEST}}
+          DATABASE_USER_TEST: ${{secrets.DATABASE_USER_TEST}}
+          DATABASE_PASSWORD_TEST: ${{secrets.DATABASE_PASSWORD_TEST}}
+          DATABASE_ROOT_PASSWORD_TEST: ${{secrets.DATABASE_ROOT_PASSWORD_TEST}}
+          EMAIL: ${{secrets.EMAIL}}
+          EMAIL_PASSWORD: ${{secrets.EMAIL_PASSWORD}}
+          JWT_SECRET: ${{secrets.JWT_SECRET}}
+          ROOT_PASSWORD: ${{secrets.ROOT_PASSWORD}}
