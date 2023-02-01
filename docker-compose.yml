@@ -6,11 +6,11 @@ services:
     container_name: mysql_librooks
     env_file: .env
     environment:
-      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD_DEV}
       MYSQL_ROOT_HOST: '%'
-      MYSQL_DATABASE: ${DATABASE_NAME}
-      MYSQL_USER: ${DATABASE_USER}
-      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME_DEV}
+      MYSQL_USER: ${DATABASE_USER_DEV}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD_DEV}
     ports:
       - "3306:3306"
     volumes:
@@ -22,11 +22,11 @@ services:
     container_name: mysql_librooks_test
     env_file: .env
     environment:
-      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD_TEST}
       MYSQL_ROOT_HOST: '%'
-      MYSQL_DATABASE: ${DATABASE_NAME}
-      MYSQL_USER: ${DATABASE_USER}
-      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME_TEST}
+      MYSQL_USER: ${DATABASE_USER_TEST}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD_TEST}
     ports:
       - "3305:3306"
     volumes:
