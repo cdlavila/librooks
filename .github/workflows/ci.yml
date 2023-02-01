@@ -43,7 +43,7 @@ jobs:
       mysqldb-test:
         image: mysql:latest
         env:
-          MYSQL_ROOT_HOST: '%'
+          MYSQL_ROOT_HOST: ${{secrets.DATABASE_HOST_TEST}}
           MYSQL_ROOT_PASSWORD: ${{secrets.DATABASE_ROOT_PASSWORD_TEST}}
           MYSQL_DATABASE: ${{secrets.DATABASE_NAME_TEST}}
           MYSQL_USER: ${{secrets.DATABASE_USER_TEST}}
