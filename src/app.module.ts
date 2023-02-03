@@ -14,12 +14,13 @@ import { PurchasesModule } from './purchases/purchases.module';
 import { BookingsModule } from './bookings/bookings.module';
 import databaseConfig from './config/database.config';
 import authConfig from './config/auth.config';
+import commonConfig from './config/common.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: '.env',
-      load: [databaseConfig, authConfig],
+      load: [commonConfig, databaseConfig, authConfig],
       isGlobal: true,
       cache: true,
     }),

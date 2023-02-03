@@ -15,8 +15,8 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.sayWelcome()).toBe('Hello World!');
+    it('should return "Welcome to the Librooks API!"', () => {
+      expect(appController.sayWelcome()).toBe('Welcome to the Librooks API!');
     });
   });
 });
