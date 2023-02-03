@@ -8,11 +8,21 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         type: 'mysql',
-        host: configService.get<string>('database.host'),
-        port: configService.get<number>('database.port'),
-        username: configService.get<string>('database.user'),
-        password: configService.get<string>('database.password'),
-        database: configService.get<string>('database.name'),
+        host: configService.get<string>(
+          `database.${configService.get<string>('common.nodeEnv')}.host`,
+        ),
+        port: configService.get<number>(
+          `database.${configService.get<string>('common.nodeEnv')}.port`,
+        ),
+        username: configService.get<string>(
+          `database.${configService.get<string>('common.nodeEnv')}.user`,
+        ),
+        password: configService.get<string>(
+          `database.${configService.get<string>('common.nodeEnv')}.password`,
+        ),
+        database: configService.get<string>(
+          `database.${configService.get<string>('common.nodeEnv')}.name`,
+        ),
         autoLoadEntities: true,
         synchronize: false,
       }),
