@@ -16,7 +16,7 @@ export class CreatePaymentCardDto {
   @IsByteLength(16, 16, {
     message: 'El número debe tener 16 caracteres',
   })
-  @IsNumberString({ message: 'El número debe ser un numérico' })
+  @IsNumberString()
   @IsNotEmpty({ message: 'El número es requerido' })
   readonly number: string;
 
@@ -27,7 +27,7 @@ export class CreatePaymentCardDto {
   @IsByteLength(3, 3, {
     message: 'El código de seguridad debe tener 3 caracteres',
   })
-  @IsNumberString({ message: 'El código de seguridad debe ser numérico' })
+  @IsNumberString()
   @IsNotEmpty({ message: 'El código de seguridad es requerido' })
   readonly cvc: string;
 
