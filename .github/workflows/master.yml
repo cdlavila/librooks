@@ -41,9 +41,9 @@ jobs:
       - name: Run migrations
         run: npm run migration:run
       - name: Run unit tests
-        run: npm run test
+        run: npm run test:prod
       - name: Run e2e tests
-        run: npm run test:e2e
+        run: npm run test:e2e:prod
   CD:
     name: Continuos Deployment
     runs-on: ubuntu-latest
