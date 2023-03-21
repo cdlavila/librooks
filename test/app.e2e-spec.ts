@@ -19,7 +19,7 @@ describe('AppController (e2e)', () => {
     return request(app.getHttpServer())
       .get('/')
       .expect(200)
-      .expect('Welcome to the Librooks API!');
+      .expect('Welcome to the Librooks API');
   });
 
   afterAll(async () => {
