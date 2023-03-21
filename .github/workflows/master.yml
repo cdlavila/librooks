@@ -52,4 +52,17 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      # Write the steps here
+      - name: Execute remote SSH commands
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.AWS_HOST_PROD }}
+          username: ${{ secrets.AWS_USER_PROD }}
+          key: ${{ secrets.AWS_SSH_KEY }}
+          password: ${{ secrets.AWS_SSH_PASSWORD }}
+          script: |
+            PATH=$PATH:/home/${{ secrets.AWS_USER_PROD }}/.nvm/versions/node/v18.1.0/bin &&
+            cd librooks &&
+            git pull origin master &&
+            npm install &&
+            npm run build &&
+            pm2 restart librooks
