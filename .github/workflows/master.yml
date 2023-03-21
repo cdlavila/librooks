@@ -58,7 +58,7 @@ jobs:
           host: ${{ secrets.AWS_HOST_PROD }}
           username: ${{ secrets.AWS_USER_PROD }}
           key: ${{ secrets.AWS_SSH_KEY }}
-          # password: ${{ secrets.AWS_SSH_PASSWORD }}
+          password: ${{ secrets.AWS_SSH_PASSWORD }}
 #          script: |
 #            PATH=$PATH:/usr/bin &&
 #            cd librooks &&
