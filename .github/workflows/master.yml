@@ -23,7 +23,7 @@ jobs:
       - name: Make the environment file
         uses: SpicyPizza/create-envfile@v1.3
         with:
-          envkey_NODE_ENV: ${{secrets.NODE_ENV}}
+          envkey_NODE_ENV: ${{secrets.NODE_ENV_PROD}}
           envkey_PORT: ${{secrets.PORT}}
           envkey_DATABASE_HOST_PROD: ${{secrets.DATABASE_HOST_PROD}}
           envkey_DATABASE_PORT_PROD: ${{secrets.DATABASE_PORT_PROD}}
