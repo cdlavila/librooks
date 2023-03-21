@@ -73,7 +73,7 @@ export class AuthService {
       },
       { expiresIn: '5m' },
     );
-    await this.cacheManager.set(`user_${user?.id}`, token, { ttl: 60 * 5 });
+    await this.cacheManager.set(`user_${user?.id}`, token, 60 * 5);
     await this.mailService.sendMail(
       user?.email,
       '[LIBROOKS]: Recuperación de contraseña',
