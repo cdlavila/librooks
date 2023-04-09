@@ -1,13 +1,17 @@
 # LIBROOKS
-It is the REST API of our library's online store service, it is in charge of managing store data, books, genres, customers, etc.
+REST API for a bookstore application created with [Node.js](https://nodejs.org/es/), [TypeScript](https://www.typescriptlang.org/), [NestJS](https://nestjs.com/), [TypeORM](https://typeorm.io/#/), [MySQL](https://www.mysql.com/) and tested with [Jest](https://jestjs.io/).
+<br>
+<br>
+It is in charge of managing store data, books, genres, customers, etc.
+
 ## Installation
 To install the project, we need to have installed the next:
 - Node.js 🟢
 - Docker and Docker-compose 🐋
 
-If you don't have Node.js installed, you can install the latest version [here](https://nodejs.org/es/)
+If you don't have Node.js installed, you can install the latest version [here](https://nodejs.org/es/).
 
-If you don't have Docker installed, you can install it [following the Docker documentation](https://docs.docker.com/engine/install/)
+If you don't have Docker installed, you can install it [following the Docker documentation](https://docs.docker.com/engine/install/).
 
 <blockquote>
 <span>
@@ -19,7 +23,7 @@ If you install Docker Desktop (on Windows and Mac), it comes with docker compose
 </blockquote>
 
 #### Step 1
-Clone the project
+Clone the project.
 ```bash
 $ git clone https://github.com/cdlavila/librooks
 ```
@@ -32,10 +36,10 @@ Raise the Docker containers, for this you have to run the following command in t
 ```bash
 $ docker-compose up -d
 ```
-The above command will build a network with the necessary containers for the project to run: mysql and redis.
+The above command will build a network with the necessary containers for the project to run: mysql.
 
 #### Step 4
-Install dependencies
+Install dependencies.
 
 ```bash
 $ npm install
@@ -75,9 +79,9 @@ $ npm run test:cov
 ```
 
 #### Step 6
-Check server is running, by clicking on the link that appears in the terminal
+Check server is running, by clicking on the link that appears in the terminal.
 
 #### Step 7
-Testing endpoints in Postman
+Testing endpoints in Postman.
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://documenter.getpostman.com/view/14110882/2s83zjtPkd)
