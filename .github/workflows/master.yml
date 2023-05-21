@@ -10,6 +10,21 @@ jobs:
     name: Continuos Integration
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    container:
+      image: node:18
+    services:
+      mysqldb:
+        image: mysql:latest
+        env:
+          MYSQL_ROOT_HOST: ${{secrets.DATABASE_HOST_TEST}}
+          MYSQL_ROOT_PASSWORD: ${{secrets.DATABASE_ROOT_PASSWORD_TEST}}
+          MYSQL_DATABASE: ${{secrets.DATABASE_NAME_TEST}}
+          MYSQL_USER: ${{secrets.DATABASE_USER_TEST}}
+          MYSQL_PASSWORD: ${{secrets.DATABASE_PASSWORD_TEST}}
+        ports:
+          - 3306:3306
+        # Set health checks to wait until mysql has started
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -20,30 +35,30 @@ jobs:
           cache: "npm"
       - name: Install dependencies
         run: npm ci
+      - name: Check ESLint
+        run: npm run lint
       - name: Make the environment file
         uses: SpicyPizza/create-envfile@v1.3
         with:
-          envkey_NODE_ENV: ${{secrets.NODE_ENV_PROD}}
+          envkey_NODE_ENV: ${{secrets.NODE_ENV}}
           envkey_PORT: ${{secrets.PORT}}
-          envkey_DATABASE_HOST_PROD: ${{secrets.DATABASE_HOST_PROD}}
-          envkey_DATABASE_PORT_PROD: ${{secrets.DATABASE_PORT_PROD}}
-          envkey_DATABASE_NAME_PROD: ${{secrets.DATABASE_NAME_PROD}}
-          envkey_DATABASE_USER_PROD: ${{secrets.DATABASE_USER_PROD}}
-          envkey_DATABASE_PASSWORD_PROD: ${{secrets.DATABASE_PASSWORD_PROD}}
-          envkey_DATABASE_ROOT_PASSWORD_PROD: ${{secrets.DATABASE_ROOT_PASSWORD_PROD}}
+          envkey_DATABASE_HOST_TEST: ${{secrets.DATABASE_HOST_TEST}}
+          envkey_DATABASE_PORT_TEST: ${{secrets.DATABASE_PORT_TEST}}
+          envkey_DATABASE_NAME_TEST: ${{secrets.DATABASE_NAME_TEST}}
+          envkey_DATABASE_USER_TEST: ${{secrets.DATABASE_USER_TEST}}
+          envkey_DATABASE_PASSWORD_TEST: ${{secrets.DATABASE_PASSWORD_TEST}}
+          envkey_DATABASE_ROOT_PASSWORD_TEST: ${{secrets.DATABASE_ROOT_PASSWORD_TEST}}
           envkey_EMAIL: ${{secrets.EMAIL}}
           envkey_EMAIL_PASSWORD: ${{secrets.EMAIL_PASSWORD}}
           envkey_JWT_SECRET: ${{secrets.JWT_SECRET}}
           envkey_ROOT_PASSWORD: ${{secrets.ROOT_PASSWORD}}
           fail_on_empty: true
-      - name: Check ESLint
-        run: npm run lint
       - name: Run migrations
         run: npm run migration:run
       - name: Run unit tests
-        run: npm run test:prod
+        run: npm run test
       - name: Run e2e tests
-        run: npm run test:e2e:prod
+        run: npm run test:e2e
   CD:
     name: Continuos Deployment
     runs-on: ubuntu-latest
@@ -52,10 +67,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Execute remote commands via ssh
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.AWS_HOST_PROD }}
-          username: ${{ secrets.AWS_USER_PROD }}
-          key: ${{ secrets.AWS_KEY_PROD }}
-          script: PATH=$PATH:/usr/bin && sh deploy_master.sh
+#      - name: Execute remote commands via ssh
+        # This step uses the ssh key stored in the SSH_KEY secret to access the server
+        # and execute necessary commands to deploy the application
+
