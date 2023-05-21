@@ -13,7 +13,7 @@ jobs:
     container:
       image: node:18
     services:
-      mysqldb:
+      mysqldb-test:
         image: mysql:latest
         env:
           MYSQL_ROOT_HOST: ${{secrets.DATABASE_HOST_TEST}}
